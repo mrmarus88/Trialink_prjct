@@ -14,30 +14,40 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('Trialink/', include('Trialink.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path, include
+from django.urls import path,re_path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from main import views
 
+
 table_patterns  = [
-    path("", views.tables_main),
     path("servers", views.servers),
+    path("services", views.services),
     path("terminals", views.terminals),
     path("bts", views.bts),
 ]
 
 main_page_patterns = [
-    path('', views.index),
+    path('index', views.index, name= 'home'),
     path('contacts', views.contacts),
     path('about', views.about),
     path('news', views.news),
 ]
 
 urlpatterns = [
-    #re_path(r'^index/user/<Login>/<int:Password>', views.user, name='user'),
-    path('index/', include (main_page_patterns)),
-    path('tables/', include (table_patterns)), 
+    path('', include (main_page_patterns), name= 'home'),
+    path('index/', include (main_page_patterns), name= 'home'),
+    path('tables/', include (table_patterns), name= 'table'),
+    path('tables', views.main_tables, name= 'table'),  
     re_path(r'^error', views.error, name= 'error'),
-    path('login/', views.login),
-    path("set", views.set),
-    path("get", views.get),
+    #path("set", views.set),
+    #path("get", views.get),
     path('admin/', admin.site.urls),
+    path('register/', views.register, name='register'),
+    path('profile/', views.profile, name='profile'),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

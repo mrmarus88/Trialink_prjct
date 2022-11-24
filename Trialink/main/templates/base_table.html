@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Обязательные мета-теги -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap, иконки и шрифт -->
+    <title>{% block title %}Trialink{% endblock title %}</title>
+</head>
+<body>
+    <div><a href="/index">Main</a>
+         <a href="/tables">Tables</a>
+         <a href="/tables/terminals">Terminals</a>
+         <a href="/tables/bts">BTS</a>
+         <a href="/tables/servers">Servers</a>
+         <a href="/tables/services">Services</a>
+    </div>
+    <div class="navbar-nav">
+      {% if user.is_authenticated %}
+        Logged by: {{ user.username }}
+        <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+        <a class="nav-item nav-link" href="{% url 'logout' %}">Exit</a>
+      {% else %}
+        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+        <a class="nav-item nav-link" href="{% url 'register' %}">Registration</a>
+        {% endif %}
+    </div>
+    <h1>{% block header %}{% endblock header %}</h1>
+    <div>{% block content%}{% endblock content %}</div>
+    <div>Trialink corp. 2022. All rights reserved.</div>
+</body>
+</html>

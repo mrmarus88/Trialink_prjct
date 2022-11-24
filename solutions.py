@@ -5,6 +5,8 @@ import pandas as pd
 data_rus = pd.read_csv(r'D:\\Ronet\\UpdateDB\\test\\normal.csv',sep='\t',encoding='cp1251')
 print(data_rus)
 
+# add pic in html
+# <img src="{% static "images/back.jpg" %}" alt="winter 2022" >
 
 #start\off venv server
 #  python manage.py runserver 

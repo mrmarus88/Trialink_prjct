@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .forms import UserForm
   
 def news(request):
     return render(request,"news.html")
@@ -13,7 +14,7 @@ def about(request):
 def contacts(request):
     return render(request,"contacts.html")
 
-def tables_main(request):
+def main_tables(request):
     return render(request,"main_tables.html")
 
 def terminals(request):
@@ -25,16 +26,21 @@ def bts(request):
 def servers(request):
     return render(request,"servers.html")
 
+def services(request):
+    return render(request,"services.html")
+
 def login(request):
-    host = request.META["HTTP_HOST"] # получаем адрес сервера
-    user_agent = request.META["HTTP_USER_AGENT"]    # получаем данные бразера
-    path = request.path     # получаем запрошенный путь
-     
-    return HttpResponse(f"""
-        <p>Host: {host}</p>
-        <p>Path: {path}</p>
-        <p>User-agent: {user_agent}</p>
-    """)
+    return render(request, "login.html")
+
+def logout(request):
+    return render(request, "logout.html")
+
+def profile(request):
+    return render(request, "profile.html")
+
+def register(request):
+    return render(request, "register.html")
+
 def error(request):
     return HttpResponse("Error", status=400, reason="Incorrect data")
 

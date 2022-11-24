@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Trialink</title>
-    <meta charset="utf-8" />
-</head>
-<body>
-    <h2>Trialink Database 2022</h2>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Main{% endblock title %}
+{% block header %}Main{% endblock header %}
+  
+{% block content %}
+<h1>Trialink Database 2022</h1>
+<h2>Today:</h2>
+<h2><p>{% now "N j, Y" %}</p>
+<p>{% now "G : i" %}</p><h2>
+{% endblock content %}
+
+
+
+
+
+
