@@ -17,35 +17,41 @@ from django.contrib import admin
 from django.urls import path,re_path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from main import views
-
+from django.contrib.auth.models import User
+from rest_framework import routers, serializers, viewsets
 
 table_patterns  = [
-    path("servers", views.servers),
-    path("services", views.services),
-    path("terminals", views.terminals),
-    path("bts", views.bts),
+    path("servers", views.servers, name= 'servers'),
+    path("services", views.services, name= 'services'),
+    path("terminals", views.terminals, name= 'terminals'),
+    path("bts", views.bts, name= 'bts'),
 ]
 
 main_page_patterns = [
+    path('', views.index, name= 'home'),
     path('index', views.index, name= 'home'),
-    path('contacts', views.contacts),
-    path('about', views.about),
-    path('news', views.news),
+    path('contacts', views.contacts, name= 'contacts'),
+    path('about', views.about, name= 'about'),
+    path('news', views.news, name= 'news'),
 ]
 
 urlpatterns = [
     path('', include (main_page_patterns), name= 'home'),
-    path('index/', include (main_page_patterns), name= 'home'),
     path('tables/', include (table_patterns), name= 'table'),
     path('tables', views.main_tables, name= 'table'),  
     re_path(r'^error', views.error, name= 'error'),
-    #path("set", views.set),
-    #path("get", views.get),
     path('admin/', admin.site.urls),
     path('register/', views.register, name='register'),
+    path('register/login',  auth_views.LoginView.as_view(template_name = 'registration/login.html'), name='login'),
     path('profile/', views.profile, name='profile'),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('login/', auth_views.LoginView.as_view(template_name = 'registration/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name = 'registration/logout.html'), name='logout'),
+    #path('accounts/', include('django.contrib.auth.urls')),
+    #path('api-auth/', include('rest_framework.urls')),
+    #path("set", views.set),
+    #path("get", views.get),
 ]
 
 if settings.DEBUG:

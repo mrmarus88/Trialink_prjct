@@ -1,6 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
+from django.contrib import messages
 from .forms import UserForm
+from .forms import NewUserForm, UserUpdateForm, ProfileUpdateForm
+
+
   
 def news(request):
     return render(request,"news.html")
@@ -29,17 +35,19 @@ def servers(request):
 def services(request):
     return render(request,"services.html")
 
-def login(request):
-    return render(request, "login.html")
-
-def logout(request):
-    return render(request, "logout.html")
-
-def profile(request):
-    return render(request, "profile.html")
-
 def register(request):
-    return render(request, "register.html")
+	if request.method == "POST":
+		form = NewUserForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			login(request, user)
+			messages.success(request, "Registration successful." )
+			return redirect("home")
+		messages.error(request, "Unsuccessful registration. Invalid information.")
+	form = NewUserForm()
+	return render (request=request, template_name="registration/register.html", context={"register_form":form})
+
+
 
 def error(request):
     return HttpResponse("Error", status=400, reason="Incorrect data")
@@ -62,3 +70,27 @@ def get(request):
     # получаем куки с ключом username
     username = request.COOKIES["username"]
     return HttpResponse(f"Hello {username}")
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST,
+                                   request.FILES,
+                                   instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Profile updated.')
+            return redirect('profile')
+
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+
+    return render(request, 'registration/profile.html', context)

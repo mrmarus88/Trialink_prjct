@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "main_/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="content-section">
@@ -9,7 +9,7 @@
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
-                <button class="btn btn-outline-info" type="submit">Sign In</button>
+                <button class="btn btn-outline-info" type="submit">Enter</button>
             </div>
         </form>
         <div class="border-top pt-3">
@@ -19,6 +19,3 @@
         </div>
     </div>
 {% endblock content %}
-
-
-
