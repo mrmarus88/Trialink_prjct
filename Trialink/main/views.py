@@ -48,6 +48,8 @@ def register(request):
 	return render (request=request, template_name="registration/register.html", context={"register_form":form})
 
 
+def test(request):
+    return render(request,"tables/test_table.html")
 
 def error(request):
     return HttpResponse("Error", status=400, reason="Incorrect data")

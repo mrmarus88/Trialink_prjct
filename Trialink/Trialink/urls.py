@@ -27,6 +27,7 @@ table_patterns  = [
     path("services", views.services, name= 'services'),
     path("terminals", views.terminals, name= 'terminals'),
     path("bts", views.bts, name= 'bts'),
+    path("test", views.test, name= 'test'),
 ]
 
 main_page_patterns = [

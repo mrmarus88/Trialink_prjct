@@ -1,5 +1,5 @@
-# Russian text in CSV by pandas
-# encoding='cp1251' 
+Russian text in CSV by pandas
+encoding='cp1251' 
 import pandas as pd
 # example:
 data_rus = pd.read_csv(r'D:\\Ronet\\UpdateDB\\test\\normal.csv',sep='\t',encoding='cp1251')
@@ -52,19 +52,6 @@ def profile(request):
     }
 
     return render(request, 'registration/profile.html', context)
-
-def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f'Your account has been created.')
-            return redirect('login')
-    else:
-        form = UserRegisterForm()
-    return render(request, 'registration/register.html', {'form': form})
-
 
 try:
     with connect(
