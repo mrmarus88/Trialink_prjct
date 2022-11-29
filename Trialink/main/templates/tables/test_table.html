@@ -59,14 +59,18 @@
           {% endif %}
           {% block content %}
             <h2> Test Table </h2>
-            <body>
+            <iframe class="solution" src="test_table_1.html" frameborder="0"></iframe>
+            <!-- <body>
               <script>
-                var doc = document.querySelector('link[rel="import"]');
-                // Grab DOM from doc.html's document.
-                var text = doc.querySelector('.dataframe');
+                window.addEventListener("load", function() {
+                  var doc = document.querySelector('link[rel="import"]').import.querySelector('.dataframe');
+                var text = doc;
+                console.log(doc);
                 document.body.appendChild(text.cloneNode(true));
+                }, false);
+              
               </script>
-            </body>
+            </body> -->
           {% endblock %}
         </div>
       </div>  
