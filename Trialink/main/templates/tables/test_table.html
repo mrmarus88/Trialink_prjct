@@ -58,19 +58,32 @@
             {% endfor %}
           {% endif %}
           {% block content %}
+<<<<<<< HEAD
             <p><a href="{% url 'table' %}"> Main Tables </a></p>
             <h3>Trialink Test Tables</h3>
             <div text-align:"center">
               <iframe class="solution" src="test1" frameborder="0" width="1000" height="1000" align="left"></iframe>
             </div>
             <!-- <body>  <script>
+=======
+            <h2> Test Table </h2>
+            <iframe class="solution" src="test_table_1.html" frameborder="0"></iframe>
+            <!-- <body>
+              <script>
+>>>>>>> 9308db12c01dd22a0f9c6d4eb70a2bbe79f7eb9a
                 window.addEventListener("load", function() {
                   var doc = document.querySelector('link[rel="import"]').import.querySelector('.dataframe');
                 var text = doc;
                 console.log(doc);
                 document.body.appendChild(text.cloneNode(true));
                 }, false);
+<<<<<<< HEAD
               </script></body> -->
+=======
+              
+              </script>
+            </body> -->
+>>>>>>> 9308db12c01dd22a0f9c6d4eb70a2bbe79f7eb9a
           {% endblock %}
         </div>
       </div>  
