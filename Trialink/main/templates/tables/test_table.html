@@ -10,7 +10,7 @@
      <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>   
      <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
      <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-     <link rel="import" href="/test_table_1.html">
+     <!-- <link rel="import" href="main/templates/tables/test_table_1.html"> -->
      {% if title %}
         <title>{{ title }}</title>
     {% else %}
@@ -58,15 +58,19 @@
             {% endfor %}
           {% endif %}
           {% block content %}
-            <h2> Test Table </h2>
-            <body>
-              <script>
-                var doc = document.querySelector('link[rel="import"]');
-                // Grab DOM from doc.html's document.
-                var text = doc.import.querySelector('.dataframe');
+            <p><a href="{% url 'table' %}"> Main Tables </a></p>
+            <h3>Trialink Test Tables</h3>
+            <div text-align:"center">
+              <iframe class="solution" src="test1" frameborder="0" width="1000" height="1000" align="left"></iframe>
+            </div>
+            <!-- <body>  <script>
+                window.addEventListener("load", function() {
+                  var doc = document.querySelector('link[rel="import"]').import.querySelector('.dataframe');
+                var text = doc;
+                console.log(doc);
                 document.body.appendChild(text.cloneNode(true));
-              </script>
-            </body>
+                }, false);
+              </script></body> -->
           {% endblock %}
         </div>
       </div>  

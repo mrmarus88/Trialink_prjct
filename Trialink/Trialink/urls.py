@@ -19,8 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from main import views
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
 
 table_patterns  = [
     path("servers", views.servers, name= 'servers'),
@@ -28,6 +26,11 @@ table_patterns  = [
     path("terminals", views.terminals, name= 'terminals'),
     path("bts", views.bts, name= 'bts'),
     path("test", views.test, name= 'test'),
+    path('test1',views.test1, name = "test1"),
+    path('terminals1',views.terminals1, name = "terminals1"),
+    path('bts1',views.bts1, name = "bts1"),
+    path('servers1',views.servers1, name = "servers1"),
+    path('services1',views.services1, name = "services1"),
 ]
 
 main_page_patterns = [
@@ -36,6 +39,8 @@ main_page_patterns = [
     path('contacts', views.contacts, name= 'contacts'),
     path('about', views.about, name= 'about'),
     path('news', views.news, name= 'news'),
+    path('profile', views.profile, name='profile'),
+    path('trialink', views.trialink, name = 'trialink'),
 ]
 
 urlpatterns = [
@@ -46,13 +51,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('register/', views.register, name='register'),
     path('register/login',  auth_views.LoginView.as_view(template_name = 'registration/login.html'), name='login'),
-    path('profile/', views.profile, name='profile'),
     path('login/', auth_views.LoginView.as_view(template_name = 'registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name = 'registration/logout.html'), name='logout'),
-    #path('accounts/', include('django.contrib.auth.urls')),
-    #path('api-auth/', include('rest_framework.urls')),
-    #path("set", views.set),
-    #path("get", views.get),
+    path('profile/', views.profile, name='profile'),
+    path('trialink/', views.trialink, name = 'trialink'),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
 
 if settings.DEBUG:

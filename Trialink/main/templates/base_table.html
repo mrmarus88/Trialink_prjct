@@ -20,7 +20,7 @@
    <header class="site-header">
      <nav class="navbar navbar-expand-md navbar-dark bg-blue fixed-top">
        <div class="container">
-         <a class="navbar-brand mr-4" href="{% url 'home' %}"><i class='bx bxs-rocket bx-tada-hover'></i> Trialink</a>
+         <a class="navbar-brand mr-4" href="{% url 'trialink' %}"><i class='bx bxs-rocket bx-tada-hover'></i> Trialink</a>
          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
          <span class="navbar-toggler-icon"></span>
          </button>
@@ -59,9 +59,8 @@
       <div class="col-md-4">
         <div class="content-section">
           <h3>Trialink</h3>
-          <p class='text-muted'>Database 
+          <p class='text-muted'>Database Updated: <input id="datetime" type="datetime-local">
             <ul class="list-group">
-              <a class="nav-item nav-link " href="{% url 'table' %}">Home Table</a>
               <a class="nav-item nav-link " href="{% url 'terminals' %}">Terminals</a>
               <a class="nav-item nav-link " href="{% url 'bts' %}">BTS</a>
               <a class="nav-item nav-link " href="{% url 'servers' %}">Servers</a>
@@ -75,8 +74,8 @@
 
   </main>
   <!-- Футер закреплен внизу, независимо от количества постов на странице -->
-  <footer class="text-center bg-dark">
-    <p><a href="{% url 'home' %}">Trialink corp. 2022. All rights reserved.</a></p>
+  <footer role = "contentinfo" class="text-center bg-dark">
+    <p><a href="{% url 'trialink' %}">Trialink corp. 2022. All rights reserved.</a></p>
   </footer>
 
  <!-- Дополнительные скрипты JavaScript -->

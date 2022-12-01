@@ -85,8 +85,8 @@ DATABASES = {
         'PASSWORD': 'Banderlog_1',
         'HOST': 'localhost',
         'PORT': '3306',
-    }
-}
+        }
+}   
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -124,6 +124,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "main/static"),]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -133,4 +137,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "home"
 LOGIN_URL = 'login'
 LOGOUT_REDIRECT_URL = "home"
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+
 

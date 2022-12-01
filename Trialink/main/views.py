@@ -3,11 +3,12 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
-from .forms import UserForm
-from .forms import NewUserForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserRegisterForm
+from .forms import UserUpdateForm, ProfileUpdateForm
+from django.views.decorators.clickjacking import xframe_options_exempt
+from django.shortcuts import get_object_or_404
 
 
-  
 def news(request):
     return render(request,"news.html")
 
@@ -35,43 +36,39 @@ def servers(request):
 def services(request):
     return render(request,"services.html")
 
+@xframe_options_exempt
+def test(request):
+    return render(request,"tables/test_table.html")
+
+def test1(request):
+    return render(request, "tables/test_table_1.html")
+    
+def terminals1(request):
+    return render(request,"tables/terminals_table_1.html")
+
+def bts1(request):
+    return render(request,"tables/bts_table_1.html")
+
+def servers1(request):
+    return render(request,"tables/servers_table_1.html")
+
+def services1(request):
+    return render(request,"tables/services_table_1.html")
+
+def error(request):
+    return HttpResponse("Error", status=400, reason="Incorrect data")
+
 def register(request):
 	if request.method == "POST":
-		form = NewUserForm(request.POST)
+		form = UserRegisterForm(request.POST)
 		if form.is_valid():
 			user = form.save()
 			login(request, user)
 			messages.success(request, "Registration successful." )
 			return redirect("home")
 		messages.error(request, "Unsuccessful registration. Invalid information.")
-	form = NewUserForm()
+	form = UserRegisterForm()
 	return render (request=request, template_name="registration/register.html", context={"register_form":form})
-
-
-def test(request):
-    return render(request,"tables/test_table.html")
-
-def error(request):
-    return HttpResponse("Error", status=400, reason="Incorrect data")
-
-
-#def user(request, Login, Password):
-#    return HttpResponse(f"<h2>Login: {Login}  Password:{Password}</h2>")
-
-# установка куки
-def set(request):
-    # получаем из строки запроса имя пользователя
-    username = request.GET.get("username", "Undefined")
-    response = HttpResponse(f"Hello {username}")
-    # передаем его в куки
-    response.set_cookie("username", username)
-    return response
- 
-# получение куки
-def get(request):
-    # получаем куки с ключом username
-    username = request.COOKIES["username"]
-    return HttpResponse(f"Hello {username}")
 
 @login_required
 def profile(request):
@@ -83,7 +80,7 @@ def profile(request):
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
-            messages.success(request, f'Profile updated.')
+            messages.success(request, f'Ваш профиль успешно обновлен.')
             return redirect('profile')
 
     else:
@@ -96,3 +93,6 @@ def profile(request):
     }
 
     return render(request, 'registration/profile.html', context)
+
+def trialink(request):
+    return redirect("https://trialink.ru/")
