@@ -45,35 +45,37 @@
     </nav>
   </header>
   <main role="main" class="container">
+    <div class="links">
+      <a class ="nav-item nav-link" href="{% url 'table' %}" align ="left"> Main Tables </a>
+      <a class= "nav-item nav-link" href="{% url 'update' %}" align ="right">Update DB info</a>
+    </div>
     <div class="row">
-      <div class="col-md-8">
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-              {{ message }}
-            </div>
-          {% endfor %}
-        {% endif %}
-        {% block content %}{% endblock %}
-      </div>
-      <div class="col-md-4">
-        <div class="content-section">
-          <h3>Trialink</h3>
-          <p class='text-muted'>Database Updated: <input id="datetime" type="datetime-local">
-            <ul class="list-group">
+        <div class="col-md-8">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+          {% block content %}
+          {% endblock content %}
+        </div>
+        <div class="list">
+          <div class="row">
+            <p class='text-muted'>Database Updated: <output id="datetime"></p>
+          </div>
+          <ul class="wrapper" align="left">
               <a class="nav-item nav-link " href="{% url 'terminals' %}">Terminals</a>
               <a class="nav-item nav-link " href="{% url 'bts' %}">BTS</a>
               <a class="nav-item nav-link " href="{% url 'servers' %}">Servers</a>
               <a class="nav-item nav-link " href="{% url 'services' %}">Services</a>
               <a class="nav-item nav-link " href="{% url 'test' %}">Test</a>
-            </ul>
-          </p>
-        </div>
-      </div>
-    </div>
-
+          </ul>
+        </div> 
+    </div>  
   </main>
-  <!-- Футер закреплен внизу, независимо от количества постов на странице -->
+  <!-- Футер закреплен внизу, независимо от количества постов на страни -->
   <footer role = "contentinfo" class="text-center bg-dark">
     <p><a href="{% url 'trialink' %}">Trialink corp. 2022. All rights reserved.</a></p>
   </footer>

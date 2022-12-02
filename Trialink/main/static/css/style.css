@@ -41,8 +41,8 @@ ul {
   background: #ffffff;
   padding: 10px 20px;
   border: 1px solid #dddddd;
-  border-radius: 3px;
-  margin-bottom: 20px;
+  border-radius: 1px;
+  margin-bottom: 5px;
 }
 
 .article-title {
@@ -120,4 +120,16 @@ footer a:hover {
 .solution {
   width: 100%;
   height: 100%;
+}
+
+.wrapper {position: right; /*задаем для родительского блока относительное позиционирование, чтобы потом абсолютно позиционировать блок внутри него*/}
+.box {
+width: 100%;
+position: absolute; 
+left: 50%;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
 }

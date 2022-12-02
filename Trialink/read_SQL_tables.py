@@ -1,4 +1,3 @@
-
 import mysql.connector
 import pandas as pd
 import pretty_html_table

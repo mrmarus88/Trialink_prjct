@@ -31,6 +31,7 @@ table_patterns  = [
     path('bts1',views.bts1, name = "bts1"),
     path('servers1',views.servers1, name = "servers1"),
     path('services1',views.services1, name = "services1"),
+    path('update', views.update, name = "update"),
 ]
 
 main_page_patterns = [

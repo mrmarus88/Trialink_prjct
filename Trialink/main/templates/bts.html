@@ -1,79 +1,8 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <!-- Обязательные мета-теги -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap, иконки и шрифт -->
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-     <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>   
-     <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
-     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-     <!-- <link rel="import" href="main/templates/tables/test_table_1.html"> -->
-     {% if title %}
-        <title>{{ title }}</title>
-    {% else %}
-        <title>Trialink</title>
-    {% endif %}
-</head>
-<body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-blue fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'home' %}"><i class='bx bxs-rocket bx-tada-hover'></i> Trialink</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link " href="{% url 'home' %}">Main</a>
-              {% if user.is_authenticated %}
-              <a class="nav-item nav-link " href="{% url 'table' %}">Tables</a>
-              {% endif %}
-            </div>
-            <!-- Правая часть навигационной панели -->
-            <div class="navbar-nav">
-              {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'profile' %}">Logged by: {{ user.username }}</a>
-                <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
-                <a class="nav-item nav-link" href="{% url 'logout' %}">Exit</a>
-              {% else %}
-                <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">Registration</a>
-              {% endif %}
-            </div>
-         </div>
-       </div>
-     </nav>
-    </header>
-    <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-          {% block content %}
-            <p><a href="{% url 'table' %}"> Main Tables </a></p>
-            <h3>Ronet BTS</h3>
-            <iframe class="solution" src="bts1" frameborder="0" width="10000" align="mid"></iframe>
-          {% endblock %}
-        </div>
-      </div>  
-    </main>
-    <!-- Футер закреплен внизу, независимо от количества постов на странице -->
-    <footer role = "contentinfo" class="text-center bg-dark">
-      <p><a href="{% url 'home' %}">Trialink corp. 2022. All rights reserved.</a></p>
-    </footer>
-
-    <!-- Дополнительные скрипты JavaScript -->
-    <!-- Сначала jQuery, затем Popper.js, последним Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
-</html>
+{% extends "base_table.html" %}
+{% block title %}BTS{% endblock title %}
+{% block header %}BTS{% endblock header %}
+  
+{% block content %}
+  <h3>Ronet BTS Table</h3>
+  <iframe class="solution" src="bts1" frameborder="0" width="10000" height='10000' align="mid"></iframe>
+{% endblock content %}

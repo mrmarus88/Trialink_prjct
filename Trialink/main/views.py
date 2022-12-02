@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
@@ -7,6 +7,7 @@ from .forms import UserRegisterForm
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import get_object_or_404
+
 
 
 def news(request):
@@ -96,3 +97,9 @@ def profile(request):
 
 def trialink(request):
     return redirect("https://trialink.ru/")
+
+@xframe_options_exempt
+def update(request):
+    if request.method == 'GET':
+        return "Trialink/read_SQL_tables.py"
+    return render(request, 'main_tables.html')
