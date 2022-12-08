@@ -51,17 +51,9 @@
      </nav>
     </header>
     <main role="main" class="container">
-      <div class="row">
-        <div class="col-md-8">
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-          {% block content %}{% endblock %}
-        </div>
+      <div class="navbar-nav">
+        {% block content %}
+        {% endblock content%}
       </div>  
     </main>
     <!-- Футер закреплен внизу, независимо от количества постов на странице -->

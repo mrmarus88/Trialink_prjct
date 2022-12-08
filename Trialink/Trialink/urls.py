@@ -19,6 +19,28 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from main import views
+from django.contrib.auth.models import User
+from rest_framework import routers, serializers, viewsets
+
+
+
+# Serializers define the API representation.
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['url', 'username', 'email', 'is_staff']
+
+# ViewSets define the view behavior.
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
 
 table_patterns  = [
     path("servers", views.servers, name= 'servers'),
@@ -27,6 +49,7 @@ table_patterns  = [
     path("bts", views.bts, name= 'bts'),
     path("test", views.test, name= 'test'),
     path('test1',views.test1, name = "test1"),
+    path('test2',views.test2, name = "test2"),
     path('terminals1',views.terminals1, name = "terminals1"),
     path('bts1',views.bts1, name = "bts1"),
     path('servers1',views.servers1, name = "servers1"),
@@ -57,6 +80,8 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('trialink/', views.trialink, name = 'trialink'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('', include (router.urls)),
+    path('api-auth/', include ('rest_framework.urls', namespace='rest_framework'))
 ]
 
 if settings.DEBUG:

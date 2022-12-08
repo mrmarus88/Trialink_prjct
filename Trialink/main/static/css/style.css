@@ -122,14 +122,28 @@ footer a:hover {
   height: 100%;
 }
 
-.wrapper {position: right; /*задаем для родительского блока относительное позиционирование, чтобы потом абсолютно позиционировать блок внутри него*/}
-.box {
-width: 100%;
-position: absolute; 
-left: 50%;
-}
-
 .links {
   display: flex;
   justify-content: space-between;
+}
+
+.container {
+  width: 100%;
+  max-width: 1024px; /*максимальная ширина может иметь другое значение*/
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.content-wrapper {
+  width: 200px;
+}
+
+.wrapper {
+  width: 30px;
 }

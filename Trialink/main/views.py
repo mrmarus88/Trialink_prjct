@@ -43,6 +43,9 @@ def test(request):
 
 def test1(request):
     return render(request, "tables/test_table_1.html")
+
+def test2(request):
+    return render(request, "tables/test_table_2.html")
     
 def terminals1(request):
     return render(request,"tables/terminals_table_1.html")
@@ -100,6 +103,11 @@ def trialink(request):
 
 @xframe_options_exempt
 def update(request):
-    if request.method == 'GET':
-        return "Trialink/read_SQL_tables.py"
-    return render(request, 'main_tables.html')
+    if request.method == "GET":
+        # functionality 1
+        data = []
+    elif request.method == "POST":
+        # functionality 2 
+        data2 = []       
+    return render(request,"main_tables.html",print(data))
+    

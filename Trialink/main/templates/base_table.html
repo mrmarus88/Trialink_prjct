@@ -28,6 +28,9 @@
            <div class="navbar-nav mr-auto">
              <a class="nav-item nav-link " href="{% url 'home' %}">Main</a>
              <a class="nav-item nav-link " href="{% url 'table' %}">Tables</a>
+             <a class="nav-item nav-link " href="{% url 'contacts' %}">Contacts</a>
+             <a class="nav-item nav-link " href="{% url 'news' %}">News</a>
+             <a class="nav-item nav-link " href="{% url 'about' %}">About</a>
            </div>
            <!-- Правая часть навигационной панели -->
            <div class="navbar-nav">
@@ -47,31 +50,30 @@
   <main role="main" class="container">
     <div class="links">
       <a class ="nav-item nav-link" href="{% url 'table' %}" align ="left"> Main Tables </a>
-      <a class= "nav-item nav-link" href="{% url 'update' %}" align ="right">Update DB info</a>
-    </div>
-    <div class="row">
-        <div class="col-md-8">
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-              </div>
-            {% endfor %}
+      <a class= "nav-item nav-link" href="{% url 'update' %}" align ="right">Update DB info
+        <div class="container">
+          {% if update.run %}
+          <p class='text-muted'>Database Updated: <output id="datetime"></p>
+          {% else %}
+          <p class='text-muted'>Database Updated: ----- </p>
           {% endif %}
-          {% block content %}
-          {% endblock content %}
         </div>
-        <div class="list">
-          <div class="row">
-            <p class='text-muted'>Database Updated: <output id="datetime"></p>
+      </a>
+    </div> 
+    <div class= "container">
+        <ul class="links">
+            <a class="nav-item nav-link " href="{% url 'terminals' %}">Terminals</a>
+            <a class="nav-item nav-link " href="{% url 'bts' %}">BTS</a>
+            <a class="nav-item nav-link " href="{% url 'servers' %}">Servers</a>
+            <a class="nav-item nav-link " href="{% url 'services' %}">Services</a>
+            <a class="nav-item nav-link " href="{% url 'test' %}">Test</a>
+            <a class="nav-item nav-link " href="{% url 'test2' %}">Test2</a>
+        </ul>
+        <div>
+          <div>
+              {% block content %}
+              {% endblock content %}
           </div>
-          <ul class="wrapper" align="left">
-              <a class="nav-item nav-link " href="{% url 'terminals' %}">Terminals</a>
-              <a class="nav-item nav-link " href="{% url 'bts' %}">BTS</a>
-              <a class="nav-item nav-link " href="{% url 'servers' %}">Servers</a>
-              <a class="nav-item nav-link " href="{% url 'services' %}">Services</a>
-              <a class="nav-item nav-link " href="{% url 'test' %}">Test</a>
-          </ul>
         </div> 
     </div>  
   </main>
