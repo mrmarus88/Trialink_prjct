@@ -50,12 +50,11 @@
        </div>
      </nav>
     </header>
-    <main role="main" class="container">
-      <div class="navbar-nav">
+    <div class="container">
         {% block content %}
-        {% endblock content%}
-      </div>  
-    </main>
+        {% endblock content%} 
+    </div>
+
     <!-- Футер закреплен внизу, независимо от количества постов на странице -->
     <footer role = "contentinfo" class="text-center bg-dark">
       <p><a href="{% url 'trialink' %}">Trialink corp. 2022. All rights reserved.</a></p>

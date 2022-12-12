@@ -7,6 +7,7 @@ from .forms import UserRegisterForm
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import get_object_or_404
+import read_SQL_tables as rd
 
 
 
@@ -105,9 +106,9 @@ def trialink(request):
 def update(request):
     if request.method == "GET":
         # functionality 1
-        data = []
+        rd.sql_request()
     elif request.method == "POST":
         # functionality 2 
-        data2 = []       
-    return render(request,"main_tables.html",print(data))
+        pass  
+    return render(request,"main_tables.html")
     

@@ -1,12 +1,59 @@
 {% extends "base.html" %}
 {% block title %}Main{% endblock title %}
 {% block header %}Main{% endblock header %}
-  
+
 {% block content %}
-<h1>Trialink Database 2022</h1>
-<h2>Today:</h2>
-<h2><p>{% now "N j, Y" %}</p>
-<p>{% now "G : i" %}</p><h2>
+<h1 align="center">Trialink Database 2022</h1>
+    <body>
+    <section class="container">
+        <div class="links">
+          <p>Moscow</p>
+          <h6>Today: {% now "N j, Y" %} {% now "G : i" %}</h6>
+        </div>
+        <br />
+        <h2>FAFSDFSDFS</h2>
+        <p>Check our solutions!</p>
+        {% if user.is_authenticated %}
+        <ul class="container_table">
+          <a class="nav-item nav-link " href="{% url 'terminals' %}">Terminals</a>
+          <a class="nav-item nav-link " href="{% url 'bts' %}">BTS</a>
+          <a class="nav-item nav-link " href="{% url 'servers' %}">Servers</a>
+          <a class="nav-item nav-link " href="{% url 'services' %}">Services</a>
+          <a class="nav-item nav-link " href="{% url 'test' %}">Test</a>
+          <a class="nav-item nav-link " href="{% url 'test2' %}">Test2</a>
+        </ul>
+        {% else %}
+        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+        <a class="nav-item nav-link" href="{% url 'register' %}">Registration</a>
+        {% endif %}
+      </section>
+      <br />
+      <section class="container_table" align="center">
+        <section>
+          <a href="speakers.html">
+            <h5>Contacts</h5>
+            <h3>Trialink communications</h3>
+          </a>
+          <p>write to us.</p>
+        </section>
+        
+        <section>
+          <a href="schedule.html">
+            <h5>Расписание</h5>
+            <h3>Три вдохновляющих дня</h3>
+          </a>
+          <p>Наслаждайтесь тремя вдохновляющими и насыщенными событиями днями переговоров, встреч и всем хорошим вокруг.</p>
+        </section>   
+    
+        <section>
+          <a href="venue.html">
+            <h5>Место проведения</h5>
+            <h3>Театр Чикаго</h3>
+          </a>
+          <p>Театр Чикаго в самом центре города обеспечит красивое место проведения конференции.</p>
+        </section>
+      </section>
+    </body>
 {% endblock content %}
 
 

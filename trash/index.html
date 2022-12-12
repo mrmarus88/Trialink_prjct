@@ -1,19 +1,38 @@
-{% extends "base_table.html" %}
-{% block title %}Test Tables{% endblock title %}
-{% block header %}Test Tables{% endblock header %}
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Styles Conference</title>
+  <link rel="stylesheet" href="assets/stylesheets/main.css">
+</head>
+<body>
+
+  <header class="container">
+    <h1>
+        <a href="index.html">Styles Conference</a>
+    </h1>
+	
+    <h3>24&ndash;26 августа &mdash; Чикаго, штат Иллинойс</h3>
+    
+	<nav>
+      <a href="index.html">Главная</a>
+      <a href="speakers.html">Спикеры</a>
+      <a href="schedule.html">Расписание</a>
+      <a href="venue.html">Место проведения</a>
+      <a href="register.html">Регистрация</a>
+    </nav>
+  </header>
   
-{% block content %}
-<main>
   <section class="hero container">
     <h2>Посвящается ремеслу создания сайтов</h2>
     <p>Каждый год самые яркие веб-дизайнеры и фронтенд-разработчики собираются в Чикаго, 
        чтобы обсудить новейшие технологии. Присоединяйся к нам этим августом!</p>
 	   
-    <a class="btn btn-alt" href="main_table.html">GO HOME AMIGO</a>
+    <a class="btn btn-alt" href="register.html">Зарегистрируйтесь сейчас</a>
   </section>
   
   <section class="container">
-    <section class="col-1-3">
+    <section>
 	  <a href="speakers.html">
         <h5>Спикеры</h5>
         <h3>Спикеры мирового класса</h3>
@@ -21,7 +40,7 @@
       <p>К нам приедут более двадцати фантастических спикеров со всего мира, чтобы поделиться своими историями.</p>
     </section>
 
-    <section class="col-1-3">
+    <section>
       <a href="schedule.html">
         <h5>Расписание</h5>
         <h3>Три вдохновляющих дня</h3>
@@ -29,7 +48,7 @@
       <p>Наслаждайтесь тремя вдохновляющими и насыщенными событиями днями переговоров, встреч и всем хорошим вокруг.</p>
     </section>   
 
-    <section class="col-1-3">
+    <section>
       <a href="venue.html">
         <h5>Место проведения</h5>
         <h3>Театр Чикаго</h3>
@@ -37,5 +56,17 @@
       <p>Театр Чикаго в самом центре города обеспечит красивое место проведения конференции.</p>
     </section>
   </section>
-</main>
-{% endblock content %}
+  
+  <footer class="container">
+    <small>&copy; Styles Conference</small>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="speakers.html">Спикеры</a>
+      <a href="schedule.html">Расписание</a>
+      <a href="venue.html">Место проведения</a>
+      <a href="register.html">Регистрация</a>
+    </nav>
+  </footer>
+	 
+</body>
+</html>
