@@ -11,7 +11,34 @@
           <h6>Today: {% now "N j, Y" %} {% now "G : i" %}</h6>
         </div>
         <br />
-        <h2>FAFSDFSDFS</h2>
+        <h2 >WELCOME!</h2>
+        <br />
+        <section align="center" class="container_contacts">
+          <section>
+            <a href="{% url 'contacts' %}">
+              <h5>Contacts</h5>
+              <h3>Trialink communications</h3>
+            </a>
+            <p>write to us.</p>
+          </section>
+          
+          <section>
+            <a href="{% url 'news' %}">
+              <h5>News</h5>
+              <h3>Trialink News</h3>
+            </a>
+            <p>What is new on company?</p>
+          </section>   
+      
+          <section>
+            <a href="{% url 'about' %}">
+              <h5>About</h5>
+              <h3>Trialink about</h3>
+            </a>
+            <p>??????</p>
+          </section>
+        </section>
+        <br />
         <p>Check our solutions!</p>
         {% if user.is_authenticated %}
         <ul class="container_table">
@@ -23,35 +50,11 @@
           <a class="nav-item nav-link " href="{% url 'test2' %}">Test2</a>
         </ul>
         {% else %}
-        <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-        <a class="nav-item nav-link" href="{% url 'register' %}">Registration</a>
+        <div class ="container_table">
+          <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+          <a class="nav-item nav-link" href="{% url 'register' %}">Registration</a>
+        </div>
         {% endif %}
-      </section>
-      <br />
-      <section class="container_table" align="center">
-        <section>
-          <a href="speakers.html">
-            <h5>Contacts</h5>
-            <h3>Trialink communications</h3>
-          </a>
-          <p>write to us.</p>
-        </section>
-        
-        <section>
-          <a href="schedule.html">
-            <h5>Расписание</h5>
-            <h3>Три вдохновляющих дня</h3>
-          </a>
-          <p>Наслаждайтесь тремя вдохновляющими и насыщенными событиями днями переговоров, встреч и всем хорошим вокруг.</p>
-        </section>   
-    
-        <section>
-          <a href="venue.html">
-            <h5>Место проведения</h5>
-            <h3>Театр Чикаго</h3>
-          </a>
-          <p>Театр Чикаго в самом центре города обеспечит красивое место проведения конференции.</p>
-        </section>
       </section>
     </body>
 {% endblock content %}

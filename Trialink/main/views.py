@@ -106,9 +106,10 @@ def trialink(request):
 def update(request):
     if request.method == "GET":
         # functionality 1
+        print("1")
         rd.sql_request()
     elif request.method == "POST":
         # functionality 2 
-        pass  
+        rd.sql_request()
     return render(request,"main_tables.html")
     
