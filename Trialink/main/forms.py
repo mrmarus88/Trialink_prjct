@@ -34,3 +34,12 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email']
+        
+class UserForm(forms.Form):
+	packet = forms.CharField(label='packet', max_length= "2" , min_length ="1")
+	subscribers = forms.CharField (label='subscribers', max_length="2000", min_length="1")
+	enodeball= forms.CharField (label='enodeball', max_length="2000", min_length="1")
+	nontelradenodeb= forms.CharField (label='nontelradenodeb', max_length="2000", min_length="1")
+	bts= forms.CharField (label='bts', max_length="2000", min_length="1")
+	bts_d= forms.CharField (label='bts_d', max_length="2000", min_length="1")
+	terminals= forms.CharField (label='terminals', max_length="2000", min_length="1")

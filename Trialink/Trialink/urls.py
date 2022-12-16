@@ -22,8 +22,6 @@ from main import views
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 
-
-
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -65,6 +63,7 @@ main_page_patterns = [
     path('news', views.news, name= 'news'),
     path('profile', views.profile, name='profile'),
     path('trialink', views.trialink, name = 'trialink'),
+    path('cs', views.cs, name= 'cs'),
 ]
 
 urlpatterns = [

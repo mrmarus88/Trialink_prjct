@@ -150,6 +150,7 @@ footer a:hover {
   row-gap: 10px;
   column-gap: 20px;
   justify-content: space-between;
+  padding-bottom: 5px;
 }
 
 .container_cont {
@@ -159,6 +160,56 @@ footer a:hover {
   margin: 0 auto;
   text-align:center;
   background-color: rgb(116, 166, 175 , 0.2);
+}
+
+.container_cs {
+  display: flex;
+  background-color: #cddeee;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.container_cs_c {
+  text-align:center;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.container_cs_c label{
+  width: 120px;
+  margin: 0 auto;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  padding-bottom: 5px;
+  padding-top: 3px;
+  margin: auto;
+}
+
+.hash-adapt {
+  min-width: 100%;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  margin: auto;
+}
+
+label {
+  font-weight: 900;
+  margin-bottom: 5px;
+  margin-left: 15px;
 }
 
 .container:after {
@@ -176,8 +227,8 @@ footer a:hover {
 }
 
 .container_contacts img {
-  border-radius: 50%;
-  height: 130px;
+  border-radius: 40%;
+  height: 100px;
   margin: -66px 0 22px 0;
   vertical-align: top;
 }

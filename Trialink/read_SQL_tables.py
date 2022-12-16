@@ -73,5 +73,5 @@ def sql_request():
 
 
     text_file.close()
-
-sql_request()
+     
+    

@@ -61,3 +61,4 @@ cursor.execute('''
 
 connect.commit() #Close session
 connect.close() #close the connection
+

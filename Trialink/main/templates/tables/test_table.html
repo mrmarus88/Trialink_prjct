@@ -3,8 +3,16 @@
 {% block header %}Test Tables{% endblock header %}
 
 {% block content %}
+<div class="container">
+  {% if update.run %}
+  <p class='text-muted'>Database Updated: {{ today }}</p>
+  {% else %}
+  <p class='text-muted'>Database Updated: ----- </p>
+  {% endif %}
+</div>
   <h3><br/>Ronet Test Table</h3>
    <iframe class="solution" src="test1" frameborder="0" height="10000" width="10000" align="left"></iframe>
+
 {% endblock content %}
   
 

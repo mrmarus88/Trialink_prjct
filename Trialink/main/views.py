@@ -1,14 +1,15 @@
+from tracemalloc import start
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
-from .forms import UserRegisterForm
-from .forms import UserUpdateForm, ProfileUpdateForm
+from libcst import Else
+from requests import request
+from .forms import UserRegisterForm, UserForm, UserUpdateForm, ProfileUpdateForm
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import get_object_or_404
 import read_SQL_tables as rd
-
 
 
 def news(request):
@@ -106,10 +107,49 @@ def trialink(request):
 def update(request):
     if request.method == "GET":
         # functionality 1
-        print("1")
         rd.sql_request()
     elif request.method == "POST":
         # functionality 2 
         rd.sql_request()
     return render(request,"main_tables.html")
-    
+
+
+
+
+def cs(request):
+    return render(request,"cs.html")
+
+
+#Commercial solution - get input from html
+def Calculate(request):
+    submitbutton= request.POST.get("submit")
+        
+    packet=''
+    subscribers=''
+    enodeball=''
+    nontelradenodeb=''
+    bts=''
+    bts_d=''
+    terminals=''
+        
+    form= UserForm(request.POST or None)
+    if form.is_valid():
+        packet= form.cleaned_data.get("packet")
+        subscribers= form.cleaned_data.get("subscribers")
+        enodeball= form.cleaned_data.get("enodeball")
+        nontelradenodeb= form.cleaned_data.get("nontelradenodeb")
+        bts= form.cleaned_data.get("bts")
+        bts_d= form.cleaned_data.get("bts_d")
+        terminals= form.cleaned_data.get("terminals")
+        
+    context= {'form': form,
+              'submitbutton': submitbutton,
+              'packet': packet,
+              'subscribers':subscribers,
+              'enodeball':enodeball,
+              'nontelradenodeb':nontelradenodeb,
+              'bts':bts,
+              'bts_d':bts_d,
+              'terminals':terminals}
+        
+    return render(request, 'cs.html', context)
