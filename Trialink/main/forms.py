@@ -3,12 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
- 
-#class UserForm(forms.Form):
-#    login = forms.CharField(label="login")
-#    password = forms.CharField(label="password",widget=forms.PasswordInput)
-    
-
 class UserRegisterForm(UserCreationForm):
 	email = forms.EmailField(required=True)
 
@@ -35,11 +29,17 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['username', 'email']
         
-class UserForm(forms.Form):
-	packet = forms.CharField(label='packet', max_length= "2" , min_length ="1")
-	subscribers = forms.CharField (label='subscribers', max_length="2000", min_length="1")
-	enodeball= forms.CharField (label='enodeball', max_length="2000", min_length="1")
-	nontelradenodeb= forms.CharField (label='nontelradenodeb', max_length="2000", min_length="1")
-	bts= forms.CharField (label='bts', max_length="2000", min_length="1")
-	bts_d= forms.CharField (label='bts_d', max_length="2000", min_length="1")
-	terminals= forms.CharField (label='terminals', max_length="2000", min_length="1")
+class InputForm(forms.Form):
+	packet= forms.CharField()
+	subscribers= forms.CharField()
+	enodeb_all= forms.CharField()
+	non_telrad_enodeb= forms.CharField()
+	bts= forms.CharField()
+	bts_d= forms.CharField()
+	terminals= forms.CharField()
+ 
+
+class Test2Form(forms.Form):
+	first_name= forms.CharField()
+	last_name= forms.CharField()
+	email= forms.EmailField()

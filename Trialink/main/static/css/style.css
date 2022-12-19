@@ -150,6 +150,7 @@ footer a:hover {
   row-gap: 10px;
   column-gap: 20px;
   justify-content: space-between;
+  padding-top: 5px;
   padding-bottom: 5px;
 }
 
@@ -158,8 +159,10 @@ footer a:hover {
   max-width: 1024px; /*максимальная ширина может иметь другое значение*/
   padding: 0 15px;
   margin: 0 auto;
-  text-align:center;
+  text-align:left;
   background-color: rgb(116, 166, 175 , 0.2);
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .container_cs {
@@ -204,6 +207,8 @@ footer a:hover {
   text-overflow: ellipsis;
   box-sizing: border-box;
   margin: auto;
+  padding-bottom: 5px;
+  padding-top: 3px;
 }
 
 label {

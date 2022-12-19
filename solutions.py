@@ -99,3 +99,40 @@ def profile(request):
         'p_form': p_form
     }
     return render(request, 'registration/profile.html', context)
+
+#Commercial solution - get input from html
+def calculate(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':     
+        # create a form instance and populate it with data from the request:                   
+        form= UserForm(request.POST)
+        
+        # check it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            packet = form.cleaned_data["packet"]
+            subscribers = form.cleaned_data["subscribers"]
+            enodeball = form.cleaned_data["enodeball"]
+            nontelradenodeb = form.cleaned_data["nontelradenodeb"]
+            bts = form.cleaned_data["bts"]
+            bts_d = form.cleaned_data["bts_d"]
+            terminals = form.cleaned_data["terminals"]
+            
+        context= {'form': form,
+                #'submitbutton': submitbutton,
+                'packet': packet,
+                'subscribers':subscribers,
+                'enodeball':enodeball,
+                'nontelradenodeb':nontelradenodeb,
+                'bts':bts,
+                'bts_d':bts_d,
+                'terminals':terminals}
+        # redirect to a new URL:   
+        return render(request, 'cs.html', context)
+            
+    
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = UserForm()
+        
+    return render(request, 'cs.html', {'form': form})

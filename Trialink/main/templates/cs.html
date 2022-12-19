@@ -1,70 +1,33 @@
 {% extends "base.html" %}
-{% block title %}Contacts{% endblock title %}
-{% block header %}Contacts{% endblock header %}
+{% block title %}Calculate{% endblock title %}
+{% block header %}Calculate{% endblock header %}
   
 {% block content %}
-    <h1 align="center">Trialink Commercial solution</h1>
     <body>
-        <br />
-        <section class="hash-adapt">
-            <form action="" method="POST">
-                <div class="input-group">
-                    <input id="packet" type='number' max="2" min ="1" name="packet" value="{{ packet }}"/>
-                    <label for="packet">Choose packet 1 or 2 (150 or 1000 subs)</label>
+        <section class="container_contacts">
+                <div class="container_cont">
+                    <form action="" method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input class="btn btn-outline-info" type="Submit" name="submit" value="Calculate"/>
+                    </form>
+                </div>    
+                <div class="container_cont">            
+                    {% if submitbutton == "Calculate" %}
+                        <h4>Your inputted these values:</h4>
+                        <p><font size="4">Packet is: <b>{{ packet }}</b></font></p>
+                        <p><font size="4">Subscribers is: <b>{{ subscribers }}</b></font></p>
+                        <p><font size="4">eNodeB all is: <b>{{ enodeb_all }}</b></font></p>
+                        <p><font size="4">Non Telrad eNodeB is: <b>{{ non_telrad_enodeb }}</b></font></p>
+                        <p><font size="4">BTS count is: <b>{{ bts }}</b></font></p>
+                        <p><font size="4">BTS distributed is: <b>{{ bts_d }}</b></font></p>
+                        <p><font size="4">Terminals is: <b>{{ terminals }}</b></font></p>
+                    {% endif %}
+                    <form action="/show_result" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-info" type="submit">Show Solution</button>
+                    </form>
                 </div>
-            </form>
-            <form action="" method="POST">
-                <div class="input-group">
-                    <input type='number' max="2000" min ="1" name="subscribers" value="{{ subscribers }}"/>
-                    <label>Subscribers</label>
-                </div>
-            </form>
-            <form action="" method="POST">
-                <div class="input-group">
-                    <input type='number' max="2000" min ="0" name="enodeball" value="{{ enodeball }}"/>
-                    <label>eNodeB (all)</label>
-                </div>
-            </form>
-            <form action="" method="POST">
-                <div class="input-group">
-                    <input type='number' max="2000" min ="0" name="nontelradenodeb" value="{{ nontelradenodeb }}"/>
-                    <label>non-Telrad eNodeB</label>
-                </div>
-            </form>
-            <form action="" method="POST">
-                <div class="input-group">
-                    <input type='number' max="2000" min ="0" name="bts"/>
-                    <label>BTS</label>
-                </div>
-            </form>
-            <form action="" method="POST">
-                <div class="input-group">
-                    <input type='number' max="2000" min ="0" name="bts_d"/>
-                    <label>BTS distributed</label>
-                </div>
-            </form>
-            <form action="/views.py" method="POST">
-                <div class="input-group">
-                    <input id="terminals" type='number' max="2000" min ="0" name="terminals" value="{{ terminals }}"/>
-                    <label>Terminals</label>
-                </div>
-            </form>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input class="btn btn-outline-info" type="submit" name="submit" value="submit" />
-            </form>
-            {% if user.is_authenticated %}
-                <h6>packet {{ packet }}</h6>
-                <h6>subscribers {{ subscribers }}</h6>
-                <h6>enodeball {{ enodeball }}</h6>
-                <h6>nontelradenodeb {{ nontelradenodeb }}</h6>
-                <h6>bts {{ bts }}</h6>
-                <h6>bts_d {{ bts_d }}</h6>
-                <h6>terminals {{ terminals }}</h6>
-            {% else %}
-                <h1> TEST 2</h1>
-            {% endif %}
         </section>
-    </body> 
+    </body>
 {% endblock content %}
