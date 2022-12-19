@@ -9,25 +9,25 @@
         <section class="hash-adapt">
             <form action="" method="POST">
                 <div class="input-group">
-                    <input id="packet" type='number' max="2" min ="1" name="packet"/>
+                    <input id="packet" type='number' max="2" min ="1" name="packet" value="{{ packet }}"/>
                     <label for="packet">Choose packet 1 or 2 (150 or 1000 subs)</label>
                 </div>
             </form>
             <form action="" method="POST">
                 <div class="input-group">
-                    <input type='number' max="2000" min ="1" name="subscribers"/>
+                    <input type='number' max="2000" min ="1" name="subscribers" value="{{ subscribers }}"/>
                     <label>Subscribers</label>
                 </div>
             </form>
             <form action="" method="POST">
                 <div class="input-group">
-                    <input type='number' max="2000" min ="0" name="enodeball"/>
+                    <input type='number' max="2000" min ="0" name="enodeball" value="{{ enodeball }}"/>
                     <label>eNodeB (all)</label>
                 </div>
             </form>
             <form action="" method="POST">
                 <div class="input-group">
-                    <input type='number' max="2000" min ="0" name="nontelradenodeb"/>
+                    <input type='number' max="2000" min ="0" name="nontelradenodeb" value="{{ nontelradenodeb }}"/>
                     <label>non-Telrad eNodeB</label>
                 </div>
             </form>
@@ -45,7 +45,7 @@
             </form>
             <form action="/views.py" method="POST">
                 <div class="input-group">
-                    <input type='number' max="2000" min ="0" name="terminals"/>
+                    <input id="terminals" type='number' max="2000" min ="0" name="terminals" value="{{ terminals }}"/>
                     <label>Terminals</label>
                 </div>
             </form>
