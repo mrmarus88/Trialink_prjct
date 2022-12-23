@@ -119,6 +119,13 @@ def calculate(request):
     subscribers=''
     enodeb_all=''
     non_telrad_enodeb=''
+    add_42U=''
+    add_7ubox=''
+    add_router=''
+    add_SGW=''
+    add_RGW=''
+    add_sfp=''
+    add_l2=''
     bts=''
     bts_d=''
     terminals=''
@@ -130,6 +137,13 @@ def calculate(request):
         subscribers = form.cleaned_data.get("subscribers")
         enodeb_all = form.cleaned_data.get("enodeb_all")
         non_telrad_enodeb = form.cleaned_data.get("non_telrad_enodeb")
+        add_42U = form.cleaned_data.get("add_42U")
+        add_7ubox = form.cleaned_data.get("add_7ubox")
+        add_router = form.cleaned_data.get("add_router")
+        add_SGW = form.cleaned_data.get("add_SGW")
+        add_RGW = form.cleaned_data.get("add_RGW")
+        add_sfp = form.cleaned_data.get("add_sfp")
+        add_l2 = form.cleaned_data.get("add_l2")
         bts = form.cleaned_data.get("bts")
         bts_d = form.cleaned_data.get("bts_d")
         terminals = form.cleaned_data.get("terminals")
@@ -141,6 +155,13 @@ def calculate(request):
               'submitbutton': submitbutton,
               'enodeb_all': enodeb_all,
               'non_telrad_enodeb': non_telrad_enodeb,
+              'add_42U': add_42U,
+              'add_7ubox': add_7ubox,
+              'add_router': add_router,
+              'add_SGW': add_SGW,
+              'add_RGW': add_RGW,
+              'add_sfp': add_sfp,
+              'add_l2': add_l2,
               'bts': bts,
               'bts_d': bts_d,
               'terminals': terminals,

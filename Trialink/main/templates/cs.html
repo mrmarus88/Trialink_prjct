@@ -14,12 +14,19 @@
                 </div>    
                 <div class="container_cont">            
                     {% if submitbutton == "Calculate" %}
-                        <h4>Your inputted these values:</h4>
+                        <h3>Your inputted these values:</h3>
                         <p><font size="4">Packet is: <b>{{ packet }}</b></font></p>
                         <p><font size="4">Subscribers is: <b>{{ subscribers }}</b></font></p>
                         <p><font size="4">eNodeB all is: <b>{{ enodeb_all }}</b></font></p>
                         <p><font size="4">Non Telrad eNodeB is: <b>{{ non_telrad_enodeb }}</b></font></p>
-                        <p><font size="4">BTS count is: <b>{{ bts }}</b></font></p>
+                        <p><font size="4">42U is: <b>{{ add_42U }}</b></font></p>
+                        <p><font size="4">7U box is: <b>{{ add_7ubox }}</b></font></p>
+                        <p><font size="4">Router is: <b>{{ add_router }}</b></font></p>
+                        <p><font size="4">SGW is: <b>{{ add_SGW }}</b></font></p>
+                        <p><font size="4">RGW is: <b>{{ add_RGW }}</b></font></p>
+                        <p><font size="4">SFP 10G+ is: <b>{{ add_sfp }}</b></font></p>
+                        <p><font size="4">L2 servoce is: <b>{{ add_l2 }}</b></font></p>
+                        <p><font size="4">BTS is: <b>{{ bts }}</b></font></p>
                         <p><font size="4">BTS distributed is: <b>{{ bts_d }}</b></font></p>
                         <p><font size="4">Terminals is: <b>{{ terminals }}</b></font></p>
                     {% endif %}
