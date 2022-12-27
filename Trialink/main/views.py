@@ -9,6 +9,7 @@ from .forms import Test2Form, UserRegisterForm, UserUpdateForm, ProfileUpdateFor
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import get_object_or_404
 import read_SQL_tables as rd
+import template as tmp
 
 
 def news(request):
@@ -59,6 +60,9 @@ def servers1(request):
 
 def services1(request):
     return render(request,"tables/services_table_1.html")
+
+def show_result_calc(request):
+    return render(request,"show_result_calc.html")
 
 def error(request):
     return HttpResponse("Error", status=400, reason="Incorrect data")
@@ -112,7 +116,9 @@ def update(request):
         rd.sql_request()
     return render(request,"main_tables.html")
 
+
 def calculate(request):
+      
     submitbutton= request.POST.get("submit")
     
     packet=''
@@ -169,6 +175,7 @@ def calculate(request):
     
     return render(request, 'cs.html', context)
 
+
 def show_result(request):
     submitbutton= request.POST.get("submit")
     
@@ -182,8 +189,21 @@ def show_result(request):
         lastname= form.cleaned_data.get("last_name")
         emailvalue= form.cleaned_data.get("email")
     
-    context= {'form': form, 'firstname': firstname,
-              'lastname':lastname, 'submitbutton': submitbutton,
+
+    context= {'form': form,
+              'firstname': firstname,
+              'lastname':lastname,
+              'submitbutton': submitbutton,
               'emailvalue':emailvalue}
     
     return render(request, 'show_result.html', context)
+
+def export_KP(request):
+    submitbutton = request.POST.get("export")
+    if request.method == "GET":
+        # functionality 1
+        tmp.export()
+    elif request.method == "POST":
+        # functionality 2 
+        tmp.export()
+    return HttpResponse

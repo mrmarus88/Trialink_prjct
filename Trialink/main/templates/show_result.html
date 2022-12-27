@@ -1,23 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Contacts{% endblock title %}
-{% block header %}Contacts{% endblock header %}
+{% block title %}BTS{% endblock title %}
+{% block header %}BTS{% endblock header %}
   
 {% block content %}
-<body>
-        <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="Submit" name="submit" value="Calculate"/>
-        </form>
-        <form action="/cs" method="POST">
-            {% csrf_token %}
-            <button class="btn btn-outline-info" type="submit">Back</button>
-        </form>
-        
-        {% if submitbutton == "Calculate" %}
-        <h1>Your first name is {{ firstname }}</h1>
-        <h1>Your last name is {{ lastname }}</h1>
-        <h1>Your email is {{ emailvalue }}</h1>
-        {% endif %}     
-</body>
+<div class="links">
+  <form action="/cs" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-outline-info" type="submit">Back</button>
+  </form>
+  <form action="export/" method="POST">
+    {% csrf_token %}
+    <button class="btn btn-outline-info" type="submit" name="export">Export solution</button>
+  </form>
+</div>  
+  <h3>Commercial solution:</h3>
+  <iframe src="show_result_calc" frameborder="0" width="1000" height="1000"></iframe>
 {% endblock content %}

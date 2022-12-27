@@ -64,8 +64,9 @@ main_page_patterns = [
     path('profile', views.profile, name='profile'),
     path('trialink', views.trialink, name = 'trialink'),
     path('cs', views.calculate, name= 'cs'),
-    #path('test_base', views.calculate, name= 'calculate'),
+    path('show_result_calc', views.show_result_calc, name= 'show_result_calc'),
     path('show_result',views.show_result, name= "show_result"),
+    path('export_KP', views.export_KP, name= 'export_KP'),
 ]
 
 urlpatterns = [
@@ -84,7 +85,6 @@ urlpatterns = [
     path('', include (router.urls)),
     path('api-auth/', include ('rest_framework.urls', namespace='rest_framework')),
     path('show_result/',views.show_result, name= "show_result"),
-    
 ]
 
 if settings.DEBUG:

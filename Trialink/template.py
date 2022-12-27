@@ -1,8 +1,7 @@
 import pandas as pd 
 import numpy as np
-from views import calculate as calc
-
-
+import pretty_html_table
+import views
 
 #import csv template
 terminals = pd.read_csv('D:\\python\\UpdateDB\\template_for_web.csv')
@@ -38,7 +37,7 @@ version_1_base = pd.DataFrame({'Position':['EPC 1',
                                    16000,
                                    3360,
                                    3840],
-                    'Total Price': [24000,
+                    'Total price': [24000,
                                    24000,
                                    0,
                                    0,
@@ -76,7 +75,7 @@ version_2_base = pd.DataFrame({'Position':['EPC 1',
                                    16000,
                                    3360,
                                    3840],
-                     'Total Price': [78400,
+                     'Total price': [78400,
                                    39200,
                                    0,
                                    0,
@@ -182,16 +181,22 @@ Position = ['EPC 50',
             'MARS UPS HS-48']
 additional = additional.fillna(0)
 
-#input version
+#input and chose packet version
 print ("Input Packet version: ")
-Version = input()
-version_1 = version_1_base[['Position','Quantity','Price','Total Price']]
-version_2 = version_2_base[['Position','Quantity','Price','Total Price']]
+Version = int(input())
+version_1 = version_1_base[['Position','Quantity','Price','Total price']]
+version_2 = version_2_base[['Position','Quantity','Price','Total price']]
+
+if Version == 1:
+    vers = version_1
+elif Version == 2:
+    vers = version_2
+else:
+    vers = 'Need to check packet version'
 
 #input subs
 print ("Input Subscribers count: ")
-subscribers = input()
-sub = int(subscribers)
+subs = int(input())
 
 #input additional positions
 print ("Additional positions: ", "eNodeB all", sep = '\n')
@@ -216,123 +221,144 @@ add_sfp10 = int(input())        # add SFP 10G+ count
 
 #Count of EPC , iHSS, iPCRF if subs < 650 : 
 count_epc = ()
-if np.array(int(((sub-150)/50)*2)) < 1:  # EPC
+if np.array(int(((subs-150)/50)*2)) < 1:  # EPC
     count_epc = 2
 else: 
-    count_epc  = np.array(int(((sub-150)/50)*2))
+    count_epc  = np.array(int(((subs-150)/50)*2))
     
 count_hss = ()                           # sub<650   iHSS
-if np.array(int(((sub-150)/50))) < 1:  
+if np.array(int(((subs-150)/50))) < 1:  
     count_hss = 1
 else: 
-    count_hss = np.array(int(((sub-150)/50)))
+    count_hss = np.array(int(((subs-150)/50)))
     
 count_pcrf =  ()                         # sub<650   iPCRF
-if np.array(int(((sub-150)/50)*2)) < 1:  
+if np.array(int(((subs-150)/50)*2)) < 1:  
     count_pcrf = 2
 else: 
-    count_pcrf = np.array(int(((sub-150)/50)*2))
+    count_pcrf = np.array(int(((subs-150)/50)*2))
     
 
 #Count iHSS, iPCRF if 1000 > subs > 650 : 
-count_hss_2 = np.array(int(((sub-650)/50)))    # sub>650   iHSS
-count_pcrf_2 = np.array(int(((sub-650)/50)*2)) # sub>650   iPCRF
+count_hss_2 = np.array(int(((subs-650)/50)))    # sub>650   iHSS
+count_pcrf_2 = np.array(int(((subs-650)/50)*2)) # sub>650   iPCRF
 
 
 #Count EPC, iHSS, iPCRF if subs > 1000 : 
 count_epc_2_2 =  ()
-if np.array(int(((sub-1000)/50)*2)) < 1:      # EPC > 1000
+if np.array(int(((subs-1000)/50)*2)) < 1:      # EPC > 1000
     count_epc_2_2 = 2
 else: 
-    count_epc_2_2  = np.array(int(((sub-1000)/50)*2))
+    count_epc_2_2  = np.array(int(((subs-1000)/50)*2))
     
 count_hss_2_2 = ()                            # sub>1000   iHSS 500
-if np.array(int(((sub-1000)/50))) < 1:  
+if np.array(int(((subs-1000)/50))) < 1:  
     count_hss_2_2 = 1
 else: 
-    count_hss_2_2 = np.array(int(((sub-1000)/50)))
+    count_hss_2_2 = np.array(int(((subs-1000)/50)))
 
 count_pcrf_2_2 =  ()
-if np.array(int(((sub-1000)/50)*2)) < 1:      # sub>1000   iPCRF 500
+if np.array(int(((subs-1000)/50)*2)) < 1:      # sub>1000   iPCRF 500
     count_pcrf_2_2 = 2
 else: 
-    count_pcrf_2_2  = np.array(int(((sub-1000)/50)*2))
+    count_pcrf_2_2  = np.array(int(((subs-1000)/50)*2))
 
 
 #Total price (price*count) for EPC, iHSS, iPCRF positions:
-Total_price_epc = int((((sub-150)/50)*2)*additional['Price'][0])    # sub<650   EPC
-Total_price_HSS = int(((sub-150)/50)*additional['Price'][1])        # sub<650   iHSS
-Total_price_PCRF = int((((sub-150)/50)*2)*additional['Price'][2])   # sub<650   iPCRF
+Total_price_epc = int((((subs-150)/50)*2)*additional['Price'][0])    # sub<650   EPC
+Total_price_HSS = int(((subs-150)/50)*additional['Price'][1])        # sub<650   iHSS
+Total_price_PCRF = int((((subs-150)/50)*2)*additional['Price'][2])   # sub<650   iPCRF
 
 
 
-#show the table based on version.
-if Version == "1":
-    print(
-        'Core Packet: #', Version, '\n',
-        'subscribers: ',sub ,  '\n',
-        version_1)
-    if subscribers <= "150":
-        print('Additional Core licences: ', "Additional licences not need", sep = '\n')
-    else:
-        if subscribers < "650":
-            less_650 = pd.DataFrame([
-            {'Position': Position[0],'Quantity': count_epc,'Price': additional['Price'][0], 'Total price': Total_price_epc},
-            {'Position': Position[1],'Quantity': count_hss,'Price': additional['Price'][1], 'Total price': Total_price_HSS},
-            {'Position': Position[2],'Quantity': count_pcrf,'Price': additional['Price'][2], 'Total price': Total_price_PCRF}
-            ])
+#additionals licences and HW:
+less_150 = pd.DataFrame([
+                {'Position': "Additional licences not need",'Quantity': '','Price': '', 'Total price': 0}
+                ])
+
+subs_1000 = pd.DataFrame([
+                {'Position': "Additional licences not need",'Quantity': '','Price': '', 'Total price': 0}
+                ])
+
+less_650 = pd.DataFrame([
+                {'Position': Position[0],'Quantity': count_epc,'Price': additional['Price'][0], 'Total price': Total_price_epc},
+                {'Position': Position[1],'Quantity': count_hss,'Price': additional['Price'][1], 'Total price': Total_price_HSS},
+                {'Position': Position[2],'Quantity': count_pcrf,'Price': additional['Price'][2], 'Total price': Total_price_PCRF}
+                ])
+
+subs_650 = pd.DataFrame([
+                {'Position': Position[0],'Quantity': count_epc,'Price': additional['Price'][0], 'Total price': Total_price_epc},
+                {'Position': Position[5],'Quantity': 1,'Price': additional['Price'][5], 'Total price': additional['Price'][5]},
+                {'Position': Position[6],'Quantity': 2,'Price': additional['Price'][6], 'Total price': (additional['Price'][6]*2)}
+                ])
+
+subs_650_1000 = pd.DataFrame([
+                {'Position': Position[0],'Quantity': count_epc,'Price': additional['Price'][0], 'Total price': Total_price_epc},
+                {'Position': Position[5],'Quantity': 1,'Price': additional['Price'][5], 'Total price': additional['Price'][5]},
+                {'Position': Position[1],'Quantity': count_hss_2,'Price': additional['Price'][1], 'Total price': Total_price_HSS},
+                {'Position': Position[6],'Quantity': 2,'Price': additional['Price'][6], 'Total price': (additional['Price'][6]*2)},
+                {'Position': Position[2],'Quantity': count_pcrf_2,'Price': additional['Price'][2], 'Total price': Total_price_PCRF}
+                ])
+
+subs_1000_1500 = pd.DataFrame([
+                {'Position': Position[0],'Quantity': count_epc_2_2, 'Price': additional['Price'][0], 'Total price': Total_price_epc},
+                {'Position': Position[1],'Quantity': count_hss_2_2, 'Price': additional['Price'][1], 'Total price': Total_price_HSS},
+                {'Position': Position[2],'Quantity': count_pcrf_2_2,'Price': additional['Price'][2], 'Total price': Total_price_PCRF}
+                ])
+
+subs_1500 = pd.DataFrame([
+                {'Position': Position[0],'Quantity': count_epc_2_2, 'Price': additional['Price'][0], 'Total price': Total_price_epc},
+                {'Position': Position[5],'Quantity': 1, 'Price': additional['Price'][5], 'Total price': additional['Price'][5]},
+                {'Position': Position[6],'Quantity': 2,'Price': additional['Price'][6], 'Total price': (additional['Price'][6]*2)}  
+                ])
+
+print('Packet version: #' ,Version, '\n', vers)
+
+if  subs <= 150:
+            print('Additional Core licences: ', "Additional licences not need", sep = '\n')
+            addi = less_150
+elif subs < 650:
             print('Additional Core licences: ', less_650, sep = '\n')
-        elif subscribers == "650":
-            print('Additional Core licences: ', pd.DataFrame([
-            {'Position': Position[0],'Quantity': count_epc,'Price': additional['Price'][0], 'Total price': Total_price_epc},
-            {'Position': Position[5],'Quantity': 1,'Price': additional['Price'][5], 'Total price': additional['Price'][5]},
-            {'Position': Position[6],'Quantity': 2,'Price': additional['Price'][6], 'Total price': (additional['Price'][6]*2)}
-            ]), sep = '\n')
-        elif subscribers > "650":
-            print('Additional Core licences: ', pd.DataFrame([
-            {'Position': Position[0],'Quantity': count_epc,'Price': additional['Price'][0], 'Total price': Total_price_epc},
-            {'Position': Position[5],'Quantity': 1,'Price': additional['Price'][5], 'Total price': additional['Price'][5]},
-            {'Position': Position[1],'Quantity': count_hss_2,'Price': additional['Price'][1], 'Total price': Total_price_HSS},
-            {'Position': Position[6],'Quantity': 2,'Price': additional['Price'][6], 'Total price': (additional['Price'][6]*2)},
-            {'Position': Position[2],'Quantity': count_pcrf_2,'Price': additional['Price'][2], 'Total price': Total_price_PCRF}
-            ]), sep = '\n')
-        else:
-            print("Need to upscale licence to 1000 subs") 
-elif Version == "2":
-    print(
-        'Core Packet: #', Version, '\n',
-        'subscribers: ',sub ,  '\n',
-        version_2)
-    if subscribers <= "1000":
-        print('Additional Core licences: ', "Additional licences not need", sep = '\n')
-    elif subscribers > "1500":
-        print('Additional Core licences: ', pd.DataFrame([
-            {'Position': Position[0],'Quantity': count_epc_2_2, 'Price': additional['Price'][0], 'Total price': Total_price_epc},
-            {'Position': Position[5],'Quantity': count_hss_2_2, 'Price': additional['Price'][5], 'Total price': additional['Price'][5]},
-            {'Position': Position[1],'Quantity': count_hss_2_2, 'Price': additional['Price'][1], 'Total price': Total_price_HSS},
-            {'Position': Position[6],'Quantity': count_pcrf_2_2,'Price': additional['Price'][6], 'Total price': (additional['Price'][6]*2)},  
-            {'Position': Position[2],'Quantity': count_pcrf_2_2,'Price': additional['Price'][2], 'Total price': Total_price_PCRF}
-            ]), sep = '\n')
-    else:
-        print('Additional Core licences: ', pd.DataFrame([
-            {'Position': Position[0],'Quantity': count_epc_2_2,'Price': additional['Price'][0], 'Total price': Total_price_epc},
-            {'Position': Position[1],'Quantity': count_hss_2_2,'Price': additional['Price'][1], 'Total price': Total_price_HSS},
-            {'Position': Position[2],'Quantity': count_pcrf_2_2,'Price': additional['Price'][2], 'Total price': Total_price_PCRF}
-            ]), sep = '\n')
+            addi = less_650
+elif subs == 650:
+            print('Additional Core licences: ', subs_650, sep = '\n')
+            addi = subs_650
+elif subs > 650:
+            if subs < 1000:
+                    print('Additional Core licences: ', subs_650_1000, sep = '\n')
+                    addi = subs_650_1000
+            elif subs >= 1000:
+                    if subs == 1000:
+                            print('Additional Core licences: ', "Additional licences not need", sep = '\n')
+                            addi = subs_1000
+                    elif subs > 1000: 
+                            print('Additional Core licences: ', subs_1000_1500, sep = '\n')      
+                            addi = subs_1000_1500
+                    elif subs == 1500:
+                            print('Additional Core licences: ', subs_1500, sep = '\n')  
+                            addi = subs_1500
+else:
+            print('Need to check versions')
+            addi = 'Need to check versions'
 
 #Additionals HW+SW equipment:
 #Poc server count
 server_POC = ()  
-if  sub <= 300:
+if  subs <= 300:
         server_POC = "RONET Compact pro 300"
         price_poc = additional['Price'][16]
         count_poc = 1
-elif sub <=500:
+        totalprice_poc = count_poc*price_poc
+elif subs <=500:
         server_POC = "RONET Compact pro 500"
         price_poc = additional['Price'][17]
         count_poc = 1
+        totalprice_poc = price_poc*count_poc
 else: 
-    "RONET Profeccional 10 000"
+    server_POC = "RONET Profeccional 10 000"
+    price_poc = "-"
+    count_poc = "-"
+    totalprice_poc = 0
     
 #NMS Telrad additional licences:
 telrad_count = add_enodeb-add_nontelrad
@@ -340,7 +366,7 @@ add_telrad_nms_count = ()
 if telrad_count <= 15:
     add_telrad_nms_count = 0
     price_telrad_nms = "-"
-    total_price_add_telrad_nms = "-"
+    total_price_add_telrad_nms = 0
 else:
     add_telrad_nms_count = telrad_count - 15
     price_telrad_nms = additional['Price'][8]
@@ -353,11 +379,11 @@ if add_nontelrad > 0:
     totalprice_nontelrad = nontelrad_price*nontelrad_lic
     if nontelrad_lic <= 5:
         mars_nms_lic_5 = 1
-        mars_nms_lic_1 = "-"
+        mars_nms_lic_1 = 0
         price_mars_nms_lic_5 = additional['Price'][11]
-        price_mars_nms_lic_1 = "-"
+        price_mars_nms_lic_1 = 0
         totalprice_mars_nms_lic_5 = price_mars_nms_lic_5
-        totalprice_mars_nms_lic_1 = "-"
+        totalprice_mars_nms_lic_1 = 0
     else:
         mars_nms_lic_5 = 1
         mars_nms_lic_1 =  add_nontelrad - 5
@@ -368,13 +394,13 @@ if add_nontelrad > 0:
 else:
     nontelrad_lic = "-"
     nontelrad_price = "-"
-    totalprice_nontelrad = "-"
+    totalprice_nontelrad = 0
     mars_nms_lic_5 = "-"
     price_mars_nms_lic_5 = "-"
-    totalprice_mars_nms_lic_5 = "-"
+    totalprice_mars_nms_lic_5 = 0
     mars_nms_lic_1 = "-"
     price_mars_nms_lic_1 = "-"
-    totalprice_mars_nms_lic_1 = "-"
+    totalprice_mars_nms_lic_1 = 0
 
 
 
@@ -391,11 +417,11 @@ else:
     additional['Position'][18] = "-"
     count_42 = "-"
     price_42 = "-"
-    totalprice_42 = "-"
+    totalprice_42 = 0
     additional['Position'][19] = "-"
     count_skat = "-"
     price_skat = "-"
-    totalprice_skat = "-"
+    totalprice_skat = 0
     
 if add_7ubox > 0 :
     count_7 = add_7ubox
@@ -407,16 +433,16 @@ if add_7ubox > 0 :
 else:
     count_7 = "-"
     price_7 = "-"
-    totalprice_7 = "-"
+    totalprice_7 = 0
     count_mars_ups = "-"
     price_mars_ups = "-"
-    totalprice_mars_ups = "-"
+    totalprice_mars_ups = 0
 
 #Router, SGW, RGW, SFP10G, L2_service:
 if add_Router <= 0:     # add Router count
     count_router = "-"
     price_router = "-"
-    totralprice_router = "-"
+    totralprice_router = 0
 else:
     count_router = add_Router
     price_router = additional['Price'][15]
@@ -425,7 +451,7 @@ else:
 if add_SGW <= 0:   # add SGW count
     count_SGW = "-"
     price_SGW= "-"
-    totralprice_SGW = "-"
+    totralprice_SGW = 0
 else:
     count_SGW = add_SGW
     price_SGW = additional['Price'][13]
@@ -434,7 +460,7 @@ else:
 if add_RGW <= 0:  # add RGW count
     count_RGW = "-"
     price_RGW = "-"
-    totalprice_RGW = "-"
+    totalprice_RGW = 0
 else:
     count_RGW = add_RGW
     price_RGW = additional['Price'][14]
@@ -443,7 +469,7 @@ else:
 if add_l2 <= 0:     # add L2 service count
     count_l2 = "-"
     price_l2 = "-"
-    totalprice_l2 = "-"    
+    totalprice_l2 = 0   
 else:
     count_l2 = add_l2
     price_l2 = additional['Price'][10]
@@ -452,14 +478,14 @@ else:
 if add_sfp10 <= 0:    # add SFP 10G+ count
     count_sfp = "-"
     price_sfp = "-"
-    totalprice_sfp = "-"
+    totalprice_sfp = 0
 else:
     count_sfp = add_sfp10
     price_sfp = additional['Price'][9]
     totalprice_sfp = count_sfp*price_sfp
         
 hw_sw =  pd.DataFrame([
-    {'Position': server_POC, 'Quantity': count_poc, 'Price': price_poc, 'Total price': price_poc*count_poc},
+    {'Position': server_POC, 'Quantity': count_poc, 'Price': price_poc, 'Total price': totalprice_poc},
     {'Position': Position[8], 'Quantity': add_telrad_nms_count, 'Price': price_telrad_nms, 'Total price': total_price_add_telrad_nms},
     {'Position': Position[7], 'Quantity': nontelrad_lic,'Price': nontelrad_price, 'Total price': totalprice_nontelrad},
     {'Position': Position[11], 'Quantity': mars_nms_lic_5, 'Price': price_mars_nms_lic_5, 'Total price': totalprice_mars_nms_lic_5},
@@ -475,10 +501,63 @@ hw_sw =  pd.DataFrame([
     {'Position': Position[9], 'Quantity': count_sfp, 'Price': price_sfp , 'Total price': totalprice_sfp}
     ])        
 
-print('Additional HW+SW equipment: ', '\n',
-      'eNodeB all: ', add_enodeb, '\n',
-      'eNodeB Telrad: ', add_enodeb-add_nontelrad,'\n',
-      'eNodeB non-Telrad: ', add_nontelrad,'\n',
-      hw_sw)
+print(
+                'Additional HW+SW equipment: ', '\n',
+                'eNodeB all: ', add_enodeb, '\n',
+                'eNodeB Telrad: ', add_enodeb-add_nontelrad,'\n',
+                'eNodeB non-Telrad: ', add_nontelrad,'\n',
+                hw_sw)
 
 
+#summary.style.applymap('font-weight: bold',
+#                  subset=pd.IndexSlice[summary.index[summary.index=='Total'], :])
+        
+#Null index's in DataFrame - for beauty view.
+title_1 = pd.DataFrame([
+    {'Position': 'Core Packet: #', 'Quantity': Version, 'Price': '', 'Total price': 0},
+    {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0}])
+title_1.style.apply('font-weight: bold')
+
+title_2 = pd.DataFrame([
+    {'Position': '', 'Quantity': '', 'Price': 'Totally for Core packet:', 'Total price': vers['Total price'].sum()},
+    {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0},
+    {'Position': ('Additional Core licences: '), 'Quantity': '', 'Price': '', 'Total price': 0}]) 
+
+title_3 = pd.DataFrame([
+    {'Position': '', 'Quantity': '', 'Price': 'Totally for Additional licences:', 'Total price': addi['Total price'].sum()},
+    {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0},
+    {'Position': ('Additional HW+SW equipment: '), 'Quantity': '', 'Price': '', 'Total price': 0}]) 
+total_hw_sw = pd.DataFrame([
+    {'Position': '', 'Quantity': '', 'Price': 'Totally for additional HW and SW:', 'Total price': hw_sw['Total price'].sum()}]) 
+
+#Make tables with titels
+KP_total = pd.concat([title_1,vers,title_2,addi,title_3,hw_sw,total_hw_sw],sort= False, axis=0)
+KP_calc  = pd.concat([vers,addi,hw_sw],sort= False, axis=0)
+#KP_calc = KP_calc.fillna(0)
+
+#Calculate Total price for all quantity in column:
+total = pd.DataFrame([
+    {'Position': '', 'Quantity': '', 'Price': '', 'Total price': ''},
+    {'Position': '', 'Quantity': '', 'Price': '', 'Total price': ''},
+    {'Position': '', 'Quantity': '', 'Price': 'Project total price: ', 'Total price': KP_calc['Total price'].sum()}]) 
+
+#Make table Total + Main
+KP_calc_final = pd.concat([KP_total,total],sort= False, axis=0)
+
+
+#transform DataFrame in Table 
+html_KP_calc = pretty_html_table.build_table(KP_calc_final
+                                                ,'blue_light'
+                                                , font_size='medium'
+                                                , text_align='left'
+                                                , width='auto'
+                                                , index=False)
+
+html_write = (html_KP_calc, '\n' , total)
+
+#write html to file 
+text_file = open("main/templates/show_result_calc.html", "w") 
+text_file.write(html_KP_calc)
+#text_file.write(''.join(str(total)))
+
+print(views.export())
