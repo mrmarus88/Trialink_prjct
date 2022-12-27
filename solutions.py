@@ -136,3 +136,25 @@ def calculate(request):
         form = UserForm()
         
     return render(request, 'cs.html', {'form': form})
+
+
+def show_result(request):
+    submitbutton= request.POST.get("submit")
+    
+    firstname=''
+    lastname=''
+    emailvalue=''
+    
+    form= Test2Form(request.POST or None)
+    if form.is_valid():
+        firstname= form.cleaned_data.get("first_name")
+        lastname= form.cleaned_data.get("last_name")
+        emailvalue= form.cleaned_data.get("email")
+    
+    context= {'form': form, 'firstname': firstname,
+              'lastname':lastname, 'submitbutton': submitbutton,
+              'emailvalue':emailvalue}
+    
+    return render(request, 'show_result.html', context)
+
+
