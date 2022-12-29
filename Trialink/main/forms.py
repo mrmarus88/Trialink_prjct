@@ -30,21 +30,24 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['username', 'email']
         
 class InputForm(forms.Form):
-	packet= forms.CharField()
-	subscribers= forms.CharField()
-	enodeb_all= forms.CharField()
-	non_telrad_enodeb= forms.CharField()
-	add_42U= forms.CharField()
-	add_7ubox= forms.CharField()
-	add_router= forms.CharField()
-	add_SGW= forms.CharField()
-	add_RGW= forms.CharField()
-	add_sfp= forms.CharField()
-	add_l2= forms.CharField()
-	bts= forms.CharField()
-	bts_d= forms.CharField()
-	terminals= forms.CharField()
- 
+		CHOICES= (('1', 'Packet 1'),('2', 'Packet 2'),)
+		CHOICES2= (('RONET 300', 'RONET Compact pro 300'),('RONET 500', 'RONET Compact pro 500'),('RONET Professional', 'RONET Professional'),)
+		packet= forms.ChoiceField(widget=forms.Select, choices=CHOICES)
+		subscribers= forms.CharField()
+		server_poc= forms.ChoiceField(widget=forms.Select, choices=CHOICES2)
+		enodeb_all= forms.CharField()
+		non_telrad_enodeb= forms.CharField()
+		add_42U= forms.CharField(required=False)
+		add_7ubox= forms.CharField(required=False)
+		Router= forms.CharField(required=False)
+		add_SGW= forms.CharField(required=False)
+		add_RGW= forms.CharField(required=False)
+		eSFP_10G= forms.CharField(required=False)
+		L2_service= forms.CharField(required=False)
+		bts= forms.CharField()
+		bts_D= forms.CharField(required=False)
+		terminals= forms.CharField(required=False)
+
 
 class Test2Form(forms.Form):
 	first_name= forms.CharField()
