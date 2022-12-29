@@ -1,0 +1,16 @@
+Position,Values
+packet,1
+subscribers,250
+server,RONET 500
+enodeb_all,10
+non_telrad_enodeb,5
+add_42U,10
+add_7ubox,
+Router,1
+add_SGW,
+add_RGW,
+eSFP_10G,
+L2_service,
+bts,10
+bts_D,5
+terminals,

@@ -1,4 +1,3 @@
-from tracemalloc import start
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -9,6 +8,9 @@ from .forms import Test2Form, UserRegisterForm, UserUpdateForm, ProfileUpdateFor
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import get_object_or_404
 import read_SQL_tables as rd
+import today as tdy
+import csv
+import pandas as pd
 import template as tmp
 
 
@@ -116,6 +118,23 @@ def update(request):
         rd.sql_request()
     return render(request,"main_tables.html")
 
+expt = {
+        'packet': "",
+        'subscribers': "",
+        'server_poc': "",
+        'enodeb_all': "",
+        'non_telrad_enodeb': "",
+        'add_42U': "",
+        'add_7ubox': "",
+        'Router': "",
+        'add_SGW': "",
+        'add_RGW': "",
+        'add_sfp': "",
+        'add_l2': "",
+        'bts': "",
+        'bts_d': "",
+        'terminals': ""
+        }
 
 def calculate(request):
       
@@ -123,87 +142,105 @@ def calculate(request):
     
     packet=''
     subscribers=''
+    server_poc=''
     enodeb_all=''
     non_telrad_enodeb=''
     add_42U=''
     add_7ubox=''
-    add_router=''
+    Router=''
     add_SGW=''
     add_RGW=''
-    add_sfp=''
-    add_l2=''
+    eSFP_10G=''
+    L2_service=''
     bts=''
-    bts_d=''
+    bts_D=''
     terminals=''
     
+       
     form= InputForm(request.POST or None)
     if form.is_valid():
         # process the data in form.cleaned_data as required
         packet = form.cleaned_data.get("packet")
         subscribers = form.cleaned_data.get("subscribers")
+        server_poc = form.cleaned_data.get("server_poc")
         enodeb_all = form.cleaned_data.get("enodeb_all")
         non_telrad_enodeb = form.cleaned_data.get("non_telrad_enodeb")
         add_42U = form.cleaned_data.get("add_42U")
         add_7ubox = form.cleaned_data.get("add_7ubox")
-        add_router = form.cleaned_data.get("add_router")
+        Router = form.cleaned_data.get("Router")
         add_SGW = form.cleaned_data.get("add_SGW")
         add_RGW = form.cleaned_data.get("add_RGW")
-        add_sfp = form.cleaned_data.get("add_sfp")
-        add_l2 = form.cleaned_data.get("add_l2")
+        eSFP_10G = form.cleaned_data.get("eSFP_10G")
+        L2_service = form.cleaned_data.get("L2_service")
         bts = form.cleaned_data.get("bts")
-        bts_d = form.cleaned_data.get("bts_d")
+        bts_D = form.cleaned_data.get("bts_D")
         terminals = form.cleaned_data.get("terminals")
     
     
     context= {'form': form,
               'packet': packet,
               'subscribers': subscribers,
+              'server_poc': server_poc,
               'submitbutton': submitbutton,
               'enodeb_all': enodeb_all,
               'non_telrad_enodeb': non_telrad_enodeb,
               'add_42U': add_42U,
               'add_7ubox': add_7ubox,
-              'add_router': add_router,
+              'Router': Router,
               'add_SGW': add_SGW,
               'add_RGW': add_RGW,
-              'add_sfp': add_sfp,
-              'add_l2': add_l2,
+              'eSFP_10G': eSFP_10G,
+              'L2_service': L2_service,
               'bts': bts,
-              'bts_d': bts_d,
+              'bts_D': bts_D,
               'terminals': terminals,
               }
     
+    myData = [{"Position":"packet","Values" : packet},
+          {"Position":"subscribers", "Values" : subscribers},
+          {"Position":"server", "Values" : server_poc},
+          {"Position":"enodeb_all", "Values" : enodeb_all},
+          {"Position":"non_telrad_enodeb", "Values" : non_telrad_enodeb},
+          {"Position":"add_42U", "Values" : add_42U},
+          {"Position":"add_7ubox", "Values" : add_7ubox},
+          {"Position":"Router", "Values" : Router},
+          {"Position":"add_SGW", "Values" : add_SGW},
+          {"Position":"add_RGW", "Values" : add_RGW},
+          {"Position":"eSFP_10G", "Values" : eSFP_10G},
+          {"Position":"L2_service", "Values" : L2_service},
+          {"Position":"bts", "Values" : bts},
+          {"Position":"bts_D", "Values" : bts_D},
+          {"Position":"terminals", "Values" : terminals}]
+
+
+    with open('D:\python\Trialink\Trialink_prjct\Trialink\\test_export.csv', 'w') as csvfile:
+        fieldnames = ['Position', 'Values']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    
+        writer.writeheader()
+        writer.writerows(myData)
+        
     return render(request, 'cs.html', context)
 
 
 def show_result(request):
     submitbutton= request.POST.get("submit")
-    
-    firstname=''
-    lastname=''
-    emailvalue=''
-    
-    form= Test2Form(request.POST or None)
-    if form.is_valid():
-        firstname= form.cleaned_data.get("first_name")
-        lastname= form.cleaned_data.get("last_name")
-        emailvalue= form.cleaned_data.get("email")
-    
+    if request.method == "GET":
+        # functionality 1
+        tmp.calc()
+        return render(request,"show_result.html")
+    elif request.method == "POST":
+        # functionality 2
+        tmp.calc()
+        return render(request,"show_result.html")
 
-    context= {'form': form,
-              'firstname': firstname,
-              'lastname':lastname,
-              'submitbutton': submitbutton,
-              'emailvalue':emailvalue}
-    
-    return render(request, 'show_result.html', context)
 
 def export_KP(request):
     submitbutton = request.POST.get("export")
     if request.method == "GET":
         # functionality 1
-        tmp.export()
-    elif request.method == "POST":
-        # functionality 2 
-        tmp.export()
-    return HttpResponse
+        tmp.calc()
+        return render(request,"show_result.html")
+
+  
+

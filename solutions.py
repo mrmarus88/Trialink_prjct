@@ -158,3 +158,24 @@ def show_result(request):
     return render(request, 'show_result.html', context)
 
 
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate
+from reportlab.platypus.tables import Table,TableStyle,colors
+
+
+def export():
+    tmp.vers_exp() 
+
+
+    c_width=[1*inch] # width of the columns 
+    t=Table(export_vers,colWidths=c_width,repeatRows=1)
+    t.setStyle(TableStyle([('FONTSIZE',(0,0),(-1,-1),12),
+                           ('BACKGROUND',(0,0),(-1,0),colors.lightgreen),('VALIGN',(0,0),(-1,0),'TOP')]))
+    elements=[]
+    elements.append(t)
+    export_vers.build(elements)
+    print(export_vers)
+
+

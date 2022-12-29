@@ -4,37 +4,41 @@
   
 {% block content %}
     <body>
-        <section class="container_contacts">
-                <div class="container_cont">
+        <section class="container_cs">
+                <div class="container">
                     <form action="" method="POST">
                             {% csrf_token %}
-                            {{ form.as_p }}
                             <input class="btn btn-outline-info" type="Submit" name="submit" value="Calculate"/>
-                    </form>
-                </div>    
-                <div class="container_cont">            
+                            {{ form.as_ul }}
+                            <div>
+
+                            </div>
+                    </form> 
+                </div>         
                     {% if submitbutton == "Calculate" %}
-                        <h3>Your inputted these values:</h3>
-                        <p><font size="4">Packet is: <b>{{ packet }}</b></font></p>
-                        <p><font size="4">Subscribers is: <b>{{ subscribers }}</b></font></p>
-                        <p><font size="4">eNodeB all is: <b>{{ enodeb_all }}</b></font></p>
-                        <p><font size="4">Non Telrad eNodeB is: <b>{{ non_telrad_enodeb }}</b></font></p>
-                        <p><font size="4">42U is: <b>{{ add_42U }}</b></font></p>
-                        <p><font size="4">7U box is: <b>{{ add_7ubox }}</b></font></p>
-                        <p><font size="4">Router is: <b>{{ add_router }}</b></font></p>
-                        <p><font size="4">SGW is: <b>{{ add_SGW }}</b></font></p>
-                        <p><font size="4">RGW is: <b>{{ add_RGW }}</b></font></p>
-                        <p><font size="4">SFP 10G+ is: <b>{{ add_sfp }}</b></font></p>
-                        <p><font size="4">L2 servoce is: <b>{{ add_l2 }}</b></font></p>
-                        <p><font size="4">BTS is: <b>{{ bts }}</b></font></p>
-                        <p><font size="4">BTS distributed is: <b>{{ bts_d }}</b></font></p>
-                        <p><font size="4">Terminals is: <b>{{ terminals }}</b></font></p>
+                    <div class="container">
+                        <form action="/show_result" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-info" type="submit">Show Solution</button>
+                        </form>
+                        <h3>Your solution consist :</h3>
+                        <ul><font size="3">Packet #: <b>{{ packet }}</b></font></ul>
+                        <ul><font size="3">Subscribers quantity: <b>{{ subscribers }}</b></font></ul>
+                        <ul><font size="3">Server PoC is: <b>{{ server_poc }}</b></font></ul>
+                        <ul><font size="3">eNodeB all is: <b>{{ enodeb_all }}</b></font></ul>
+                        <ul><font size="3">Non Telrad eNodeB is: <b>{{ non_telrad_enodeb }}</b></font></ul>
+                        <ul><font size="3">42U is: <b>{{ add_42U }}</b></font></ul>
+                        <ul><font size="3">7U box is: <b>{{ add_7ubox }}</b></font></ul>
+                        <ul><font size="3">Router is: <b>{{ Router }}</b></font></ul>
+                        <ul><font size="3">SGW is: <b>{{ add_SGW }}</b></font></ul>
+                        <ul><font size="3">RGW is: <b>{{ add_RGW }}</b></font></ul>
+                        <ul><font size="3">eSFP 10G+ is: <b>{{ eSFP_10G }}</b></font></ul>
+                        <ul><font size="3">L2 servoce is: <b>{{ L2_service }}</b></font></ul>
+                        <ul><font size="3">BTS is: <b>{{ bts }}</b></font></ul>
+                        <ul><font size="3">BTS distributed is: <b>{{ bts_D }}</b></font></ul>
+                        <ul><font size="3">Terminals is: <b>{{ terminals }}</b></font></ul>
+                    </div>
                     {% endif %}
-                    <form action="/show_result" method="POST">
-                        {% csrf_token %}
-                        <button class="btn btn-outline-info" type="submit">Show Solution</button>
-                    </form>
-                </div>
         </section>
     </body>
 {% endblock content %}
