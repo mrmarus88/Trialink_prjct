@@ -192,6 +192,102 @@ def calc():
                 'Ronet Professional HW',
                 'Ronet Professional add licences (+100 subs)']
     
+    bts_position = pd.DataFrame({'Position':['eB01H03112',  #0
+                                            'eB01M04112',   #1
+                                            'eB01M05112',   #2
+                                            'eB01L06112',   #3
+                                            'eB01L37112',   #4d
+                                            'eB03H08112',   #5
+                                            'eB03H10112',   #6
+                                            'eB03M11112',   #7
+                                            'eB03M12112',   #8
+                                            'eB03L13112',   #9
+                                            'eB03L38112',   #10
+                                            'eB05H15112',   #11
+                                            'eB05H17112',   #12
+                                            'eB05M18112',   #13
+                                            'eB05M19112',   #14
+                                            'eB08H20112',   #15
+                                            'eB08H22112',   #16
+                                            'eB08M23112',   #17
+                                            'eB08M24112',   #18
+                                            'eB28H25112',   #19
+                                            'eB31M26112',   #20
+                                            'eB33L45012',   #21
+                                            'eB33H47012',   #22
+                                            'eB38L27012',   #23
+                                            'eB39L46012',   #24
+                                            'eB39H48012',   #25
+                                            'eB40H28014',   #26
+                                            'eB40L29012',   #27
+                                            'eB41H30014',   #28
+                                            'eB41L31012',   #29
+                                            'eB42L32012',   #30
+                                            'eB43L33012',   #31
+                                            'eB42H39014',   #32
+                                            'eB43H40014',   #33
+                                            'eB42M41014',   #34
+                                            'eB43M42014',   #35
+                                            'eB48M43014',   #36
+                                            'eB46L44014',   #37
+                                            'eB48L34012',   #38
+                                            'eB87M35112',   #39
+                                            'eB88M36112',   #40
+                                            'eB01H02122',   #41     distrib
+                                            'eB01L07122',   #42     distrib
+                                            'eB03H09122',   #43     distrib
+                                            'eB03L14122',   #44     distrib
+                                            'eB05H16122',   #45     distrib
+                                            'eB08H21122'],  #46
+                                 'Price': [5530,#0
+                                        1850,   #1
+                                        2930,   #2
+                                        0,      #3
+                                        0,      #4
+                                        0,      #5
+                                        5530,   #6
+                                        1850,   #7
+                                        2930,   #8
+                                        0,      #9
+                                        0,      #10
+                                        0,      #11
+                                        5530,   #12
+                                        1850,   #13
+                                        2930,   #14
+                                        0,      #15
+                                        5530,   #16
+                                        1850,   #17
+                                        2930,   #18
+                                        0,      #19
+                                        0,      #20
+                                        0,      #21
+                                        0,      #22
+                                        0,      #23
+                                        0,      #24
+                                        0,      #25
+                                        21980,  #26
+                                        3000,   #27
+                                        0,      #28
+                                        0,      #29
+                                        0,      #30
+                                        0,      #31
+                                        0,      #32
+                                        0,      #33
+                                        0,      #34
+                                        0,      #35
+                                        0,      #36
+                                        0,      #37
+                                        0,      #38
+                                        0,      #39
+                                        0,      #40
+                                        3895,   #41
+                                        425,    #42
+                                        3895,   #43
+                                        425,    #44
+                                        3895,   #45   
+                                        3895]}) #46     
+                        
+    
     additional = additional.fillna(0)
 
     #input and chose packet version
@@ -234,47 +330,47 @@ def calc():
 
     #Count of EPC , iHSS, iPCRF if subs < 650 : 
     count_epc = ()
-    if np.array(int(((subs-150)/50)*2)) < 1:  # EPC
+    if np.array(int(math.ceil((subs-150)/50)*2)) < 1:  # EPC
         count_epc = 2
     else: 
-        count_epc  = np.array(int(((subs-150)/50)*2))
+        count_epc  = np.array(int(math.ceil((subs-150)/50)*2))
         
     count_hss = ()                           # sub<650   iHSS
-    if np.array(int(((subs-150)/50))) < 1:  
+    if np.array(int(math.ceil((subs-150)/50))) < 1:  
         count_hss = 1
     else: 
-        count_hss = np.array(int(((subs-150)/50)))
+        count_hss = np.array(int(math.ceil((subs-150)/50)))
         
     count_pcrf =  ()                         # sub<650   iPCRF
-    if np.array(int(((subs-150)/50)*2)) < 1:  
+    if np.array(int(math.ceil((subs-150)/50)*2)) < 1:  
         count_pcrf = 2
     else: 
-        count_pcrf = np.array(int(((subs-150)/50)*2))
+        count_pcrf = np.array(int(math.ceil((subs-150)/50)*2))
         
 
     #Count iHSS, iPCRF if 1000 > subs > 650 : 
-    count_hss_2 = np.array(int(((subs-650)/50)))    # sub>650   iHSS
-    count_pcrf_2 = np.array(int(((subs-650)/50)*2)) # sub>650   iPCRF
+    count_hss_2 = np.array(int(math.ceil((subs-650)/50)))    # sub>650   iHSS
+    count_pcrf_2 = np.array(int(math.ceil((subs-650)/50)*2)) # sub>650   iPCRF
 
 
     #Count EPC, iHSS, iPCRF if subs > 1000 : 
     count_epc_2_2 =  ()
-    if np.array(int(((subs-1000)/50)*2)) < 1:      # EPC > 1000
+    if np.array(int(math.ceil((subs-1000)/50)*2)) < 1:      # EPC > 1000
         count_epc_2_2 = 2
     else: 
-        count_epc_2_2  = np.array(int(((subs-1000)/50)*2))
+        count_epc_2_2  = np.array(int(math.ceil((subs-1000)/50)*2))
         
     count_hss_2_2 = ()                            # sub>1000   iHSS 500
-    if np.array(int(((subs-1000)/50))) < 1:  
+    if np.array(int(math.ceil((subs-1000)/50))) < 1:  
         count_hss_2_2 = 1
     else: 
-        count_hss_2_2 = np.array(int(((subs-1000)/50)))
+        count_hss_2_2 = np.array(int(math.ceil((subs-1000)/50)))
 
     count_pcrf_2_2 =  ()
-    if np.array(int(((subs-1000)/50)*2)) < 1:      # sub>1000   iPCRF 500
+    if np.array(int(math.ceil((subs-1000)/50)*2)) < 1:      # sub>1000   iPCRF 500
         count_pcrf_2_2 = 2
     else: 
-        count_pcrf_2_2  = np.array(int(((subs-1000)/50)*2))
+        count_pcrf_2_2  = np.array(int(math.ceil((subs-1000)/50)*2))
 
 
     #additionals licences and HW:
@@ -350,30 +446,43 @@ def calc():
     #Additionals HW+SW equipment:
     #Poc server count
     server_POC = export_values.iloc [2]['Values']
+    server_POC_final = ()
     if  server_POC == "RONET 300":
-            server_POC = "RONET Compact pro 300"
+        if subs <= 300:
+            server_POC_final = "RONET Compact pro 300"
             price_poc = additional['Price'][16]
             count_poc = 1
             totalprice_poc = count_poc*price_poc
+        else:
+            server_POC_final = "Check Subs qnty"
+            price_poc = "-"
+            count_poc = "-"
+            totalprice_poc = 0
     elif server_POC == "RONET 500":
-            server_POC = "RONET Compact pro 500"
+        if subs <= 500:
+            server_POC_final = "RONET Compact pro 500"
             price_poc = additional['Price'][17]
             count_poc = 1
             totalprice_poc = price_poc*count_poc
-    elif server_POC == "Professional":
-        server_POC = "RONET Profeccional 10 000"
-        price_poc = 0
-        count_poc = 0
+        else:
+            server_POC_final = "Check Subs qnty"
+            price_poc = "-"
+            count_poc = "-"
+            totalprice_poc = 0
+    elif server_POC == "RONET Professional":
+        server_POC_final = "RONET Profeccional pack:"
+        price_poc = "-"
+        count_poc = "-"
         totalprice_poc = 0
     
     #RONET PROFESSIONAL - HW+SW + additional licences:
     count_ronet_profi = ()
     server_POC_1 = export_values.iloc [2]['Values']
-    if server_POC_1 == "Professional":
-        if (subs - 300) <= 1:
+    if server_POC_1 == "RONET Professional":
+        if (subs - 300) <= 0:
             count_ronet_profi = 0
         else:
-            count_ronet_profi = np.array(math.ceil(int((subs - 300)/100)))
+            count_ronet_profi = np.array(int(math.ceil((subs - 300)/100)))
     else:
         count_ronet_profi = 0
         
@@ -385,13 +494,14 @@ def calc():
     
     Ronet_Profi_final = ()
     server_POC_2 = export_values.iloc [2]['Values']
-    if server_POC_2 == "Professional":
+    if server_POC_2 == "RONET Professional":
         Ronet_Profi_final = Ronet_Profi
     else:
-        Ronet_Profi_final == pd.DataFrame([{'Position': '-', 'Quantity': '-', 'Price': '-', 'Total price': 0}]) 
+        Ronet_Profi_final = pd.DataFrame([
+            {'Position': '-', 'Quantity': '-', 'Price': '-', 'Total price': 0}]) 
     
      #Make final Dataframe based on Server POC:
-    Server_POC_final = pd.DataFrame([{'Position': server_POC, 'Quantity': count_poc, 'Price': price_poc, 'Total price': totalprice_poc}])    
+    Server_POC_final = pd.DataFrame([{'Position': server_POC_final, 'Quantity': count_poc, 'Price': price_poc, 'Total price': totalprice_poc}])    
     
     Ronet_server = pd.concat([Server_POC_final,Ronet_Profi_final],sort= False, axis=0)
 
@@ -520,7 +630,6 @@ def calc():
         totalprice_sfp = count_sfp*price_sfp
             
     hw_sw =  pd.DataFrame([
-        {'Position': server_POC, 'Quantity': count_poc, 'Price': price_poc, 'Total price': totalprice_poc},
         {'Position': Position[8], 'Quantity': add_telrad_nms_count, 'Price': price_telrad_nms, 'Total price': total_price_add_telrad_nms},
         {'Position': Position[7], 'Quantity': nontelrad_lic,'Price': nontelrad_price, 'Total price': totalprice_nontelrad},
         {'Position': Position[11], 'Quantity': mars_nms_lic_5, 'Price': price_mars_nms_lic_5, 'Total price': totalprice_mars_nms_lic_5},
@@ -546,28 +655,87 @@ def calc():
 
     #summary.style.applymap('font-weight: bold',
     #                  subset=pd.IndexSlice[summary.index[summary.index=='Total'], :])
-            
+
+    #BTS tables:
+    bts = int(export_values.iloc [12]['Values'])
+    bts_type = export_values.iloc [13]['Values']
+    
+    bts_cnt = ()
+    if bts <= 0:
+        bts_cnt = ""
+    else: bts_cnt = bts
+    
+    bts_df = pd.DataFrame([
+        {'Position': bts_type, 'Quantity': bts_cnt, 'Price': 1, 'Total price': bts*1}])
+
+    
+    #terminals tables:
+    terminals = int(export_values.iloc [14]['Values'])
+    terminals_type = export_values.iloc [15]['Values']
+    
+    terminals_cnt = ()
+    if terminals <= 0:
+        terminals_cnt = ""
+    else: terminals_cnt = terminals
+    
+    terminals_df = pd.DataFrame([
+        {'Position': terminals_type, 'Quantity': terminals_cnt, 'Price': 1, 'Total price': terminals*1}])
+    
+    
+           
     #Null index's in DataFrame - for beauty view.
+    #add summary $ for block
     title_1 = pd.DataFrame([
-        {'Position': 'Core Packet: #', 'Quantity': Version, 'Price': '', 'Total price': 0},
-        {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0}])
+        {'Position': 'Core Packet: #', 'Quantity': Version, 'Price': '', 'Total price': 0},])
     title_1.style.apply('font-weight: bold')
 
     title_2 = pd.DataFrame([
         {'Position': '', 'Quantity': '', 'Price': 'Totally for Core packet:', 'Total price': vers['Total price'].sum()},
         {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0},
-        {'Position': ('Additional Core licences: '), 'Quantity': '', 'Price': '', 'Total price': 0}]) 
+        {'Position': 'Additional Core licences: ', 'Quantity': '', 'Price': '', 'Total price': 0}]) 
 
     title_3 = pd.DataFrame([
         {'Position': '', 'Quantity': '', 'Price': 'Totally for Additional licences:', 'Total price': addi['Total price'].sum()},
         {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0},
-        {'Position': ('Additional HW+SW equipment: '), 'Quantity': '', 'Price': '', 'Total price': 0}]) 
+        {'Position': 'Server PoC:', 'Quantity': '', 'Price': '', 'Total price': 0}]) 
+    
+    title_4 = pd.DataFrame([
+        {'Position': '', 'Quantity': '', 'Price': 'Totally for server PoC:', 'Total price': Ronet_server['Total price'].sum()},
+        {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0},
+        {'Position': 'Additional HW+SW equipment: ', 'Quantity': '', 'Price': '', 'Total price': 0}]) 
+    
     total_hw_sw = pd.DataFrame([
         {'Position': '', 'Quantity': '', 'Price': 'Totally for additional HW and SW:', 'Total price': hw_sw['Total price'].sum()}]) 
-
+    
+    title_5 = pd.DataFrame([
+        {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0},
+        {'Position': 'BTS:', 'Quantity': '', 'Price': '', 'Total price': 0}]) 
+    
+    title_6 = pd.DataFrame([
+        {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0},
+        {'Position': 'Terminals:', 'Quantity': '', 'Price': '', 'Total price': 0}]) 
+    
+    title__null = pd.DataFrame([
+        {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0},
+        {'Position': '', 'Quantity': '', 'Price': '', 'Total price': 0}]) 
+    
+    total_bts_df = pd.DataFrame([
+        {'Position': '', 'Quantity': '', 'Price': 'Totally for BTS:', 'Total price': bts_df['Total price'].sum()}]) 
+    
+    total_terminals_df = pd.DataFrame([
+        {'Position': '', 'Quantity': '', 'Price': 'Totally for Terminals:', 'Total price': terminals_df['Total price'].sum()}])
+    
     #Make tables with titels
-    KP_total = pd.concat([title_1,vers,title_2,addi,title_3,Ronet_server,hw_sw,total_hw_sw],sort= False, axis=0)
-    KP_calc  = pd.concat([vers,addi,hw_sw],sort= False, axis=0)
+    KP_total = pd.concat([title_1,vers,
+                          title_2,addi,
+                          title_3,Ronet_server,
+                          title_4,hw_sw,total_hw_sw,
+                          title_5,bts_df,total_bts_df,
+                          title_6,terminals_df,total_terminals_df,
+                          title__null]
+                         ,sort= False, axis=0)
+    
+    KP_calc  = pd.concat([vers,addi,Ronet_server,bts_df,hw_sw],sort= False, axis=0)
     #KP_calc = KP_calc.fillna(0)
 
     #Calculate Total price for all quantity in column:
@@ -587,8 +755,6 @@ def calc():
                                                     , text_align='left'
                                                     , width='auto'
                                                     , index=False)
-
-    html_write = (html_KP_calc, '\n' , total)
 
     #write html to file 
     text_file = open("main/templates/show_result_calc.html", "w") 

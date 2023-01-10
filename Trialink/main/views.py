@@ -8,7 +8,7 @@ from .forms import Test2Form, UserRegisterForm, UserUpdateForm, ProfileUpdateFor
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import get_object_or_404
 import read_SQL_tables as rd
-import today as tdy
+import datetime
 import csv
 import pandas as pd
 import template as tmp
@@ -26,30 +26,39 @@ def about(request):
 def contacts(request):
     return render(request,"contacts.html")
 
-def main_tables(request):
-    return render(request,"main_tables.html")
-
 def terminals(request):
-    return render(request,"terminals.html")
+    context= {'date': date,
+              }
+    return render(request,"terminals.html",context)
 
 def bts(request):
-    return render(request,"bts.html")
+    context= {'date': date,
+              }
+    return render(request,"bts.html",context)
 
 def servers(request):
-    return render(request,"servers.html")
+    context= {'date': date,
+              }
+    return render(request,"servers.html",context)
 
 def services(request):
-    return render(request,"services.html")
+    context= {'date': date,
+              }
+    return render(request,"services.html",context)
 
 @xframe_options_exempt
 def test(request):
-    return render(request,"tables/test_table.html")
+    context= {'date': date,
+              }
+    return render(request,"tables/test_table.html",context)
 
 def test1(request):
     return render(request, "tables/test_table_1.html")
 
 def test2(request):
-    return render(request, "tables/test_table_2.html")
+    context= {'date': date,
+              }
+    return render(request, "tables/test_table_2.html",context)
     
 def terminals1(request):
     return render(request,"tables/terminals_table_1.html")
@@ -108,15 +117,31 @@ def profile(request):
 def trialink(request):
     return redirect("https://trialink.ru/")
 
+date = {'date': ""}
+
 @xframe_options_exempt
 def update(request):
+    global date
     if request.method == "GET":
         # functionality 1
         rd.sql_request()
+        date = datetime.datetime.today().strftime("%d/%m/%Y  %H.%M.%S") # format  2022-04-05  00.18.00
+        context= {'date': date,
+              }
     elif request.method == "POST":
         # functionality 2 
         rd.sql_request()
-    return render(request,"main_tables.html")
+        date = datetime.datetime.today().strftime("%d/%m/%Y  %H.%M.%S") # format  2022-04-05  00.18.00
+        context= {'date': date,
+              }
+    return render(request,"main_tables.html",context)
+
+
+def main_tables(request):
+    context= {'date': date,
+              }
+    return render(request,"main_tables.html",context)
+
 
 expt = {
         'packet': "",
@@ -133,7 +158,8 @@ expt = {
         'add_l2': "",
         'bts': "",
         'bts_d': "",
-        'terminals': ""
+        'terminals': "",
+        'terminals_type': ""
         }
 
 def calculate(request):
@@ -153,8 +179,9 @@ def calculate(request):
     eSFP_10G=''
     L2_service=''
     bts=''
-    bts_D=''
+    bts_type=''
     terminals=''
+    terminals_type=''
     
        
     form= InputForm(request.POST or None)
@@ -173,8 +200,9 @@ def calculate(request):
         eSFP_10G = form.cleaned_data.get("eSFP_10G")
         L2_service = form.cleaned_data.get("L2_service")
         bts = form.cleaned_data.get("bts")
-        bts_D = form.cleaned_data.get("bts_D")
+        bts_type = form.cleaned_data.get("bts_type")
         terminals = form.cleaned_data.get("terminals")
+        terminals_type = form.cleaned_data.get("terminals_type")
     
     
     context= {'form': form,
@@ -192,8 +220,9 @@ def calculate(request):
               'eSFP_10G': eSFP_10G,
               'L2_service': L2_service,
               'bts': bts,
-              'bts_D': bts_D,
+              'bts_type': bts_type,
               'terminals': terminals,
+              'terminals_type': terminals_type,
               }
     
     myData = [{"Position":"packet","Values" : packet},
@@ -209,8 +238,9 @@ def calculate(request):
           {"Position":"eSFP_10G", "Values" : eSFP_10G},
           {"Position":"L2_service", "Values" : L2_service},
           {"Position":"bts", "Values" : bts},
-          {"Position":"bts_D", "Values" : bts_D},
-          {"Position":"terminals", "Values" : terminals}]
+          {"Position":"bts_type", "Values" : bts_type},
+          {"Position":"terminals", "Values" : terminals},
+          {"Position":"terminals_type", "Values" : terminals_type}]
 
 
     with open('D:\python\Trialink\Trialink_prjct\Trialink\\test_export.csv', 'w') as csvfile:
@@ -242,5 +272,6 @@ def export_KP(request):
         tmp.calc()
         return render(request,"show_result.html")
 
-  
+    
+    
 
