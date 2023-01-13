@@ -1,16 +1,15 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
 from requests import request
-from .forms import Test2Form, UserRegisterForm, UserUpdateForm, ProfileUpdateForm,InputForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm,InputForm
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.shortcuts import get_object_or_404
 import read_SQL_tables as rd
 import datetime
 import csv
-import pandas as pd
 import template as tmp
 
 
@@ -27,37 +26,31 @@ def contacts(request):
     return render(request,"contacts.html")
 
 def terminals(request):
-    context= {'date': date,
-              }
+    context= {'date': date,}
     return render(request,"terminals.html",context)
 
 def bts(request):
-    context= {'date': date,
-              }
+    context= {'date': date,}
     return render(request,"bts.html",context)
 
 def servers(request):
-    context= {'date': date,
-              }
+    context= {'date': date,}
     return render(request,"servers.html",context)
 
 def services(request):
-    context= {'date': date,
-              }
+    context= {'date': date,}
     return render(request,"services.html",context)
 
 @xframe_options_exempt
 def test(request):
-    context= {'date': date,
-              }
+    context= {'date': date,}
     return render(request,"tables/test_table.html",context)
 
 def test1(request):
     return render(request, "tables/test_table_1.html")
 
 def test2(request):
-    context= {'date': date,
-              }
+    context= {'date': date,}
     return render(request, "tables/test_table_2.html",context)
     
 def terminals1(request):
@@ -152,7 +145,8 @@ expt = {
         'bts': "",
         'bts_d': "",
         'terminals': "",
-        'terminals_type': ""
+        'terminals_type': "",
+        'scenario': ""
         }
 
 def calculate(request):
@@ -175,6 +169,7 @@ def calculate(request):
     bts_type=''
     terminals=''
     terminals_type=''
+    scenario=''
     
        
     form= InputForm(request.POST or None)
@@ -196,6 +191,7 @@ def calculate(request):
         bts_type = form.cleaned_data.get("bts_type")
         terminals = form.cleaned_data.get("terminals")
         terminals_type = form.cleaned_data.get("terminals_type")
+        scenario = form.cleaned_data.get("scenario")
     
     
     context= {'form': form,
@@ -216,6 +212,7 @@ def calculate(request):
               'bts_type': bts_type,
               'terminals': terminals,
               'terminals_type': terminals_type,
+              'scenario': scenario,
               }
     
     myData = [{"Position":"packet","Values" : packet},
@@ -233,10 +230,11 @@ def calculate(request):
           {"Position":"bts", "Values" : bts},
           {"Position":"bts_type", "Values" : bts_type},
           {"Position":"terminals", "Values" : terminals},
-          {"Position":"terminals_type", "Values" : terminals_type}]
+          {"Position":"terminals_type", "Values" : terminals_type},
+          {"Position":"scenario", "Values" : scenario}]
 
 
-    with open('D:\python\Trialink\Trialink_prjct\Trialink\\test_export.csv', 'w') as csvfile:
+    with open('Trialink\\test_export.csv', 'w') as csvfile:
         fieldnames = ['Position', 'Values']
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     

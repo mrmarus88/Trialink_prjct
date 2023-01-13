@@ -7,9 +7,7 @@ import math
 
 def calc():
     #import csv template
-    export_val = pd.read_csv('D:\python\Trialink\Trialink_prjct\Trialink\\test_export.csv')
-    export_values = pd.DataFrame(export_val)
-    export_values = export_values.fillna(0)
+    export_values = pd.DataFrame(pd.read_csv('Trialink\\test_export.csv')).fillna(0)
 
     version_1_base = pd.DataFrame({'Position':['EPC 1',
                                     'EPC 2',
@@ -21,15 +19,6 @@ def calc():
                                     'NMS HW',
                                     'MARS_MTM'],
                         'Quantity': [1,1,1,1,1,2,1,1,1],
-                        'Cost': [3000,
-                                3000,
-                                0,
-                                0,
-                                675,
-                                580,
-                                4000,
-                                1000,
-                                0],
                         'Price': [24000,
                                     24000,
                                     0,
@@ -59,15 +48,6 @@ def calc():
                                     'NMS HW',
                                     'MARS_MTM'],
                         'Quantity': [1,1,1,1,2,4,1,1,1],
-                        'Cost': [9800,
-                                4900,
-                                0,
-                                0,
-                                2250,
-                                975,
-                                4000,
-                                1000,
-                                0],
                         'Price': [78400,
                                     39200,
                                     0,
@@ -115,33 +95,6 @@ def calc():
                                     'Ronet Professional add licences (+100 subs)'],
                             
                         'Quantity': [2,1,2,1,2,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-                        
-                            'Cost': [400, #EPC 50
-                                    225, #iHSS 50
-                                    97.5,#iPCRF 50
-                                    675, #iHSS 150
-                                    580, #iPCRF 150
-                                    2250,#iHSS 500
-                                    975, #iPCRF 500
-                                    1500,#non-Telad eNodeB
-                                    400, #NMS add endB
-                                    0,    #SFP+10G
-                                    0,   #L2 service
-                                    0,   #MARS NMS SW 5endB
-                                    0,    #MARS NMS SW 1endB
-                                    0,   #RONET SGW
-                                    0,   #RONET RGW
-                                    0,   #ESR 21 Router
-                                    0,  #RONET Compact pro 300
-                                    0,  #RONET Compact pro 500
-                                    0,   #42U
-                                    0,   #SCAT UPS 3000
-                                    0,   #7U box
-                                    0,  #MARS UPS HS-48
-                                    40000,  #RPV-20000-100 (SW +300 subs)
-                                    4000,   #Ronet Professional HW
-                                    1000],  #Ronet Professional add licences (+100 subs)
-                            
                         'Price': [ 3200,   #EPC 50
                                         1800,   #iHSS 50     
                                         780,    #iPCRF 50
@@ -166,7 +119,7 @@ def calc():
                                         460,    #MARS UPS HS-48
                                         40000,  #RPV-20000-100 (SW +300 subs)
                                         4000,   #Ronet Professional HW
-                                        1000]}) #Ronet Professional add licences (+100 subs)
+                                        1000]}).fillna(0) #Ronet Professional add licences (+100 subs)
 
     Position = ['EPC 50',
                 'iHSS 50',
@@ -288,92 +241,126 @@ def calc():
                                         425,    #44
                                         3895,   #45   
                                         3895]}) #46     
-                        
-    
-    additional = additional.fillna(0)
 
-    #input and chose packet version
-    print ("Input Packet version: ")
+    #input and choose packet version
     Version = int(export_values.iloc [0]['Values'])
     version_1 = version_1_base[['Position','Quantity','Price','Total price']]
     version_2 = version_2_base[['Position','Quantity','Price','Total price']]
-
-    if Version == 1:
-        vers = version_1
-    elif Version == 2:
-        vers = version_2
-    else:
-        vers = 'Need to check packet version'
-
+    
+    # choose 1+0 or 1+1 scenario:
+    scenario = int(export_values.iloc [16]['Values'])
+    if scenario == 2:
+                    if Version == 1:
+                        vers = version_1          
+                    elif Version == 2:
+                        vers = version_2
+    elif scenario == 1:
+                    if Version == 1:
+                        vers = version_1.drop(labels = [1,3],axis = 0)   
+                        vers.loc[vers['Quantity'] == 2, 'Quantity'] = 1
+                        vers.loc[vers['Total price'] == 9280, 'Total price'] = 4640 
+                    elif Version == 2:
+                        vers = version_2.drop(labels = [1,3],axis = 0)
+                        vers.loc[vers['Quantity'] == 4, 'Quantity'] = 2
+                        vers.loc[vers['Total price'] == 31200, 'Total price'] = 15600
+                        
     #input subs
-    print ("Input Subscribers count: ")
-    subs = int(export_values.iloc [1]['Values'])
-
+    subs = int(export_values.iloc [1]['Values'])             # count subscribers
     #input additional positions
-    print ("Additional positions: ", "eNodeB all", sep = '\n')
     add_enodeb = int(export_values.iloc [3]['Values'])       # add count of all eNodeB on prjct 
-    print ("non Telrad eNodeB: ")
     add_nontelrad = int(export_values.iloc [4]['Values'])    # add non-Telrad enodeB count
-    print ("42U: ")
-    add_42u = int(export_values.iloc [5]['Values'])        # add 42U box count
-    print ("7U box: ")
+    add_42u = int(export_values.iloc [5]['Values'])          # add 42U box count
     add_7ubox = int(export_values.iloc [6]['Values'])        # add 7U box count
-    print ("Router: ")
-    add_Router = int(export_values.iloc [7]['Values'])      # add Router count
-    print ("SGW: ")
+    add_Router = int(export_values.iloc [7]['Values'])       # add Router count
     add_SGW = int(export_values.iloc [8]['Values'])          # add SGW count
-    print ("RGW: ")
-    add_RGW = int(export_values.iloc [9]['Values'])         # add RGW count
-    print ("L2 service: ")
+    add_RGW = int(export_values.iloc [9]['Values'])          # add RGW count
     add_l2 = int(export_values.iloc [11]['Values'])          # add L2 service count
-    print ("SFP 10G+: ")
     add_sfp10 = int(export_values.iloc [10]['Values'])       # add SFP 10G+ count
 
 
     #Count of EPC , iHSS, iPCRF if subs < 650 : 
-    count_epc = ()
-    if np.array(int(math.ceil((subs-150)/50)*2)) < 1:  # EPC
-        count_epc = 2
-    else: 
-        count_epc  = np.array(int(math.ceil((subs-150)/50)*2))
-        
-    count_hss = ()                           # sub<650   iHSS
-    if np.array(int(math.ceil((subs-150)/50))) < 1:  
-        count_hss = 1
-    else: 
-        count_hss = np.array(int(math.ceil((subs-150)/50)))
-        
-    count_pcrf =  ()                         # sub<650   iPCRF
-    if np.array(int(math.ceil((subs-150)/50)*2)) < 1:  
-        count_pcrf = 2
-    else: 
-        count_pcrf = np.array(int(math.ceil((subs-150)/50)*2))
-        
+    if scenario == 2:
+                        count_epc = ()
+                        if np.array(int(math.ceil((subs-150)/50)*2)) < 1:  # EPC
+                            count_epc = 2
+                        else: 
+                            count_epc  = np.array(int(math.ceil((subs-150)/50)*2))
+                            
+                        count_hss = ()                           # sub<650   iHSS
+                        if np.array(int(math.ceil((subs-150)/50))) < 1:  
+                            count_hss = 1
+                        else: 
+                            count_hss = np.array(int(math.ceil((subs-150)/50)))
+                            
+                        count_pcrf =  ()                         # sub<650   iPCRF
+                        if np.array(int(math.ceil((subs-150)/50)*2)) < 1:  
+                            count_pcrf = 2
+                        else: 
+                            count_pcrf = np.array(int(math.ceil((subs-150)/50)*2))
+                        
+                        #Count iHSS, iPCRF if 1000 > subs > 650 : 
+                        count_hss_2 = np.array(int(math.ceil((subs-650)/50)))    # sub>650   iHSS
+                        count_pcrf_2 = np.array(int(math.ceil((subs-650)/50)*2)) # sub>650   iPCRF
+                        
+                        #Count EPC, iHSS, iPCRF if subs > 1000 : 
+                        count_epc_2_2 =  ()
+                        if np.array(int(math.ceil((subs-1000)/50)*2)) < 1:      # EPC > 1000
+                            count_epc_2_2 = 2
+                        else: 
+                            count_epc_2_2  = np.array(int(math.ceil((subs-1000)/50)*2))        
+                        count_hss_2_2 = ()                            # sub>1000   iHSS 500
+                        if np.array(int(math.ceil((subs-1000)/50))) < 1:  
+                            count_hss_2_2 = 1
+                        else: 
+                            count_hss_2_2 = np.array(int(math.ceil((subs-1000)/50)))
 
-    #Count iHSS, iPCRF if 1000 > subs > 650 : 
-    count_hss_2 = np.array(int(math.ceil((subs-650)/50)))    # sub>650   iHSS
-    count_pcrf_2 = np.array(int(math.ceil((subs-650)/50)*2)) # sub>650   iPCRF
+                        count_pcrf_2_2 =  ()
+                        if np.array(int(math.ceil((subs-1000)/50)*2)) < 1:      # sub>1000   iPCRF 500
+                            count_pcrf_2_2 = 2
+                        else: 
+                            count_pcrf_2_2  = np.array(int(math.ceil((subs-1000)/50)*2))
+                    
+                        
+    elif scenario == 1:
+                        count_epc = ()
+                        if np.array(int(math.ceil(subs-150)/50)) < 1:  # EPC
+                            count_epc = 2
+                        else: 
+                            count_epc  = np.array(int(math.ceil(subs-150)/50))
+                            
+                        count_hss = ()                           # sub<650   iHSS
+                        if np.array(int(math.ceil((subs-150)/50))) < 1:  
+                            count_hss = 1
+                        else: 
+                            count_hss = np.array(int(math.ceil((subs-150)/50)))
+                            
+                        count_pcrf =  ()                         # sub<650   iPCRF
+                        if np.array(int(math.ceil(subs-150)/50)) < 1:  
+                            count_pcrf = 2
+                        else: 
+                            count_pcrf = np.array(int(math.ceil(subs-150)/50))
+                        
+                        #Count iHSS, iPCRF if 1000 > subs > 650 : 
+                        count_hss_2 = np.array(int(math.ceil((subs-650)/50)))    # sub>650   iHSS
+                        count_pcrf_2 = np.array(int(math.ceil(subs-650)/50)) # sub>650   iPCRF
+                        
+                        #Count EPC, iHSS, iPCRF if subs > 1000 : 
+                        count_epc_2_2 =  ()
+                        if np.array(int(math.ceil(subs-1000)/50)) < 1:      # EPC > 1000
+                            count_epc_2_2 = 2
+                        else: 
+                            count_epc_2_2  = np.array(int(math.ceil(subs-1000)/50))        
+                        count_hss_2_2 = ()                            # sub>1000   iHSS 500
+                        if np.array(int(math.ceil((subs-1000)/50))) < 1:  
+                            count_hss_2_2 = 1
+                        else: 
+                            count_hss_2_2 = np.array(int(math.ceil((subs-1000)/50)))
 
-
-    #Count EPC, iHSS, iPCRF if subs > 1000 : 
-    count_epc_2_2 =  ()
-    if np.array(int(math.ceil((subs-1000)/50)*2)) < 1:      # EPC > 1000
-        count_epc_2_2 = 2
-    else: 
-        count_epc_2_2  = np.array(int(math.ceil((subs-1000)/50)*2))
-        
-    count_hss_2_2 = ()                            # sub>1000   iHSS 500
-    if np.array(int(math.ceil((subs-1000)/50))) < 1:  
-        count_hss_2_2 = 1
-    else: 
-        count_hss_2_2 = np.array(int(math.ceil((subs-1000)/50)))
-
-    count_pcrf_2_2 =  ()
-    if np.array(int(math.ceil((subs-1000)/50)*2)) < 1:      # sub>1000   iPCRF 500
-        count_pcrf_2_2 = 2
-    else: 
-        count_pcrf_2_2  = np.array(int(math.ceil((subs-1000)/50)*2))
-
+                        count_pcrf_2_2 =  ()
+                        if np.array(int(math.ceil(subs-1000)/50)) < 1:      # sub>1000   iPCRF 500
+                            count_pcrf_2_2 = 2
+                        else: 
+                            count_pcrf_2_2  = np.array(int(math.ceil(subs-1000)/50))
 
     #additionals licences and HW:
     less_150 = pd.DataFrame([
@@ -414,9 +401,7 @@ def calc():
                     {'Position': Position[0],'Quantity': count_epc_2_2, 'Price': additional['Price'][0], 'Total price': count_epc_2_2*additional['Price'][0]},
                     {'Position': Position[5],'Quantity': 1, 'Price': additional['Price'][5], 'Total price': additional['Price'][5]},
                     {'Position': Position[6],'Quantity': 2,'Price': additional['Price'][6], 'Total price': (additional['Price'][6]*2)}  
-                    ])
-
-    print('Packet version: #' ,Version, '\n', vers)
+                    ])  
 
     if  subs <= 150:
                 print('Additional Core licences: ', "Additional licences not need", sep = '\n')
@@ -442,9 +427,8 @@ def calc():
                                 print('Additional Core licences: ', subs_1500, sep = '\n')  
                                 addi = subs_1500
     else:
-                print('Need to check versions')
                 addi = 'Need to check versions'
-
+                
     #Additionals HW+SW equipment:
     #Poc server count
     server_POC = export_values.iloc [2]['Values']
@@ -526,9 +510,9 @@ def calc():
         totalprice_nontelrad = nontelrad_price*nontelrad_lic
         if nontelrad_lic <= 5:
             mars_nms_lic_5 = 1
-            mars_nms_lic_1 = 0
+            mars_nms_lic_1 = "-"
             price_mars_nms_lic_5 = additional['Price'][11]
-            price_mars_nms_lic_1 = 0
+            price_mars_nms_lic_1 = "-"
             totalprice_mars_nms_lic_5 = price_mars_nms_lic_5
             totalprice_mars_nms_lic_1 = 0
         else:
@@ -647,17 +631,6 @@ def calc():
         {'Position': Position[9], 'Quantity': count_sfp, 'Price': price_sfp , 'Total price': totalprice_sfp}
         ])        
 
-    print(
-                    'Additional HW+SW equipment: ', '\n',
-                    'eNodeB all: ', add_enodeb, '\n',
-                    'eNodeB Telrad: ', add_enodeb-add_nontelrad,'\n',
-                    'eNodeB non-Telrad: ', add_nontelrad,'\n',
-                    hw_sw)
-
-
-    #summary.style.applymap('font-weight: bold',
-    #                  subset=pd.IndexSlice[summary.index[summary.index=='Total'], :])
-
     #BTS tables:
     bts = int(export_values.iloc [12]['Values'])
     bts_type = export_values.iloc [13]['Values']
@@ -687,7 +660,14 @@ def calc():
            
     #Null index's in DataFrame - for beauty view.
     #add summary $ for block
+    scenario_title = ()
+    if scenario == 1:
+        scenario_title = "1+0"
+    elif scenario == 2:
+        scenario_title = "1+1"
+        
     title_1 = pd.DataFrame([
+        {'Position': 'Scenario: ', 'Quantity': scenario_title, 'Price': '', 'Total price': 0},
         {'Position': 'Core Packet: #', 'Quantity': Version, 'Price': '', 'Total price': 0},])
     title_1.style.apply('font-weight: bold')
 
@@ -737,8 +717,13 @@ def calc():
                           title__null]
                          ,sort= False, axis=0)
     
-    KP_calc  = pd.concat([vers,addi,Ronet_server,bts_df,terminals_df,hw_sw],sort= False, axis=0)
-    #KP_calc = KP_calc.fillna(0)
+    #make tables without titles, for calculating SUM
+    KP_calc  = pd.concat([vers,
+                          addi,
+                          Ronet_server,
+                          bts_df,
+                          terminals_df,
+                          hw_sw],sort= False, axis=0).fillna(0)
 
     #Calculate Total price for all quantity in column:
     total = pd.DataFrame([
@@ -748,19 +733,11 @@ def calc():
 
     #Make table Total + Main
     KP_calc_final = pd.concat([KP_total,total],sort= False, axis=0)
+    KP_calc_final.loc[KP_calc_final['Total price'] == 0, 'Total price'] = ""
 
-
-
-    # create excel writer object
-    writer = pd.ExcelWriter('media/results.xlsx') 
-    # write dataframe to excel 
-    KP_calc_final.to_excel(writer) 
-    # save the excel
-    writer.save()
-    print('DataFrame is written successfully to Excel Sheet.')
-    
-    
-    
+    writer = pd.ExcelWriter('media/results.xlsx')   # create excel writer object
+    KP_calc_final.to_excel(writer)                  # write dataframe to excel 
+    writer.save()                                   # save the excel 
     
     #transform DataFrame in Table 
     html_KP_calc = pretty_html_table.build_table(KP_calc_final

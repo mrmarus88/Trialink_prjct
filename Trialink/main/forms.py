@@ -55,7 +55,9 @@ class InputForm(forms.Form):
       				('-', '-'),
              		('P101A', 'P101A'),
                		)
+		CHOICES5= (('1', '1+0'),('2', '1+1'),)
   
+		scenario= forms.ChoiceField(widget=forms.Select, choices=CHOICES5)
 		packet= forms.ChoiceField(widget=forms.Select, choices=CHOICES)
 		subscribers= forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(2000)])
 		server_poc= forms.ChoiceField(widget=forms.Select, choices=CHOICES2)
