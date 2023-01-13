@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.contrib import messages
@@ -125,15 +125,8 @@ def update(request):
     if request.method == "GET":
         # functionality 1
         rd.sql_request()
-        date = datetime.datetime.today().strftime("%d/%m/%Y  %H.%M.%S") # format  2022-04-05  00.18.00
-        context= {'date': date,
-              }
-    elif request.method == "POST":
-        # functionality 2 
-        rd.sql_request()
-        date = datetime.datetime.today().strftime("%d/%m/%Y  %H.%M.%S") # format  2022-04-05  00.18.00
-        context= {'date': date,
-              }
+        date = datetime.datetime.today().strftime("%d %b. %Y  %H:%M") # format  2022-04-05  00.18.00
+        context= {'date': date,}
     return render(request,"main_tables.html",context)
 
 
@@ -254,7 +247,6 @@ def calculate(request):
 
 
 def show_result(request):
-    submitbutton= request.POST.get("submit")
     if request.method == "GET":
         # functionality 1
         tmp.calc()
@@ -264,13 +256,6 @@ def show_result(request):
         tmp.calc()
         return render(request,"show_result.html")
 
-
-def export_KP(request):
-    submitbutton = request.POST.get("export")
-    if request.method == "GET":
-        # functionality 1
-        tmp.calc()
-        return render(request,"show_result.html")
 
     
     
