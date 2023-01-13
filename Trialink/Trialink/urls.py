@@ -66,7 +66,6 @@ main_page_patterns = [
     path('cs', views.calculate, name= 'cs'),
     path('show_result_calc', views.show_result_calc, name= 'show_result_calc'),
     path('show_result',views.show_result, name= "show_result"),
-    path('export_KP', views.export_KP, name= 'export_KP'),
 ]
 
 urlpatterns = [

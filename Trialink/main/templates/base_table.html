@@ -48,12 +48,14 @@
         </div>
       </nav>
     </header>
+  <!-- Правая часть панели по обновлению данных из mySQL сУБД, и время обновления. + текущее время -->
   <main class="container">
     <div class="links">
       <a class ="nav-item nav-link" href="{% url 'table' %}" align ="left"> Solutions </a>
       <div class="container_contacts">
           <a class= "nav-item nav-link" href="{% url 'update' %}" align ="right">Update DB info
-          <h6 class="text-muted">Database Updated: {{date}}</h6>
+          <h6 class="text-muted">Database Updated: {{date}}</h6> <!--время и дата обновления данных из сУБД -->
+          <h6 class="text-muted">Now: {% now "j N Y" %} {% now "G:i" %}</h6> <!--  текущее время -->
           </a>
       </div>
     </div> 

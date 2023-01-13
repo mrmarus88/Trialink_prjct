@@ -1,7 +1,9 @@
 import pandas as pd 
 import numpy as np
 import pretty_html_table
-
+from ptext.pdf.document import Document
+from ptext.pdf.page.page import Page
+from ptext.pdf.pdf import PDF
 
 #import csv template
 def calc():

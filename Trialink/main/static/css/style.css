@@ -16,9 +16,15 @@ body {
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
-
 ul {
-  margin: 0;
+  /* Убираю маркеры у списка*/
+  list-style: none;
+  /* Делаю элементы блочными. */
+  display: block;
+  /* Убираю отступы. */
+  margin:0px;
+  /* Убираю еще отступы! */
+  padding:0px;
 }
 
 .bg-blue {

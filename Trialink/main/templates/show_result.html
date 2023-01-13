@@ -10,7 +10,9 @@
   </form>
   <form action="export/" method="POST">
     {% csrf_token %}
-    <button class="btn btn-outline-info" type="submit" name="export">Export solution</button>
+    <a href="media/results.xlsx" download>
+      <img src="/media/download.png" alt="Export solution" width="35" height="35">
+    </a>
   </form>
 </div>  
   <h3>Commercial solution:</h3>

@@ -1,7 +1,9 @@
+from openpyxl import Workbook
 import pandas as pd 
 import numpy as np
 import pretty_html_table
 import math
+
 
 def calc():
     #import csv template
@@ -164,7 +166,7 @@ def calc():
                                         460,    #MARS UPS HS-48
                                         40000,  #RPV-20000-100 (SW +300 subs)
                                         4000,   #Ronet Professional HW
-                                        1000],}) #Ronet Professional add licences (+100 subs)
+                                        1000]}) #Ronet Professional add licences (+100 subs)
 
     Position = ['EPC 50',
                 'iHSS 50',
@@ -735,7 +737,7 @@ def calc():
                           title__null]
                          ,sort= False, axis=0)
     
-    KP_calc  = pd.concat([vers,addi,Ronet_server,bts_df,hw_sw],sort= False, axis=0)
+    KP_calc  = pd.concat([vers,addi,Ronet_server,bts_df,terminals_df,hw_sw],sort= False, axis=0)
     #KP_calc = KP_calc.fillna(0)
 
     #Calculate Total price for all quantity in column:
@@ -748,6 +750,18 @@ def calc():
     KP_calc_final = pd.concat([KP_total,total],sort= False, axis=0)
 
 
+
+    # create excel writer object
+    writer = pd.ExcelWriter('media/results.xlsx') 
+    # write dataframe to excel 
+    KP_calc_final.to_excel(writer) 
+    # save the excel
+    writer.save()
+    print('DataFrame is written successfully to Excel Sheet.')
+    
+    
+    
+    
     #transform DataFrame in Table 
     html_KP_calc = pretty_html_table.build_table(KP_calc_final
                                                     ,'blue_light'
@@ -758,10 +772,13 @@ def calc():
 
     #write html to file 
     text_file = open("main/templates/show_result_calc.html", "w") 
-    text_file.write(html_KP_calc)
-    #text_file.write(''.join(str(total)))
+    text_file.write(html_KP_calc)  
+    text_file.close()
+    
+    
+
+
 
     
-    text_file.close()
 
 
