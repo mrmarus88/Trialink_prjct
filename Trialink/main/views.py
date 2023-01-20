@@ -142,11 +142,13 @@ expt = {
         'add_RGW': "",
         'add_sfp': "",
         'add_l2': "",
-        'bts': "",
+        'bts_all': "",
         'bts_d': "",
         'terminals': "",
         'terminals_type': "",
-        'scenario': ""
+        'scenario': "",
+        'bts_qty':"",
+        'bts_type1_qty':""
         }
 
 def calculate(request):
@@ -165,11 +167,13 @@ def calculate(request):
     add_RGW=''
     eSFP_10G=''
     L2_service=''
-    bts=''
-    bts_type=''
+    bts_all=''
+    bts_type_1=''
     terminals=''
     terminals_type=''
     scenario=''
+    bts_qty=''
+    bts_type1_qty=''
     
        
     form= InputForm(request.POST or None)
@@ -187,11 +191,13 @@ def calculate(request):
         add_RGW = form.cleaned_data.get("add_RGW")
         eSFP_10G = form.cleaned_data.get("eSFP_10G")
         L2_service = form.cleaned_data.get("L2_service")
-        bts = form.cleaned_data.get("bts")
-        bts_type = form.cleaned_data.get("bts_type")
+        bts_all = form.cleaned_data.get("bts_all")
+        bts_type_1 = form.cleaned_data.get("bts_type_1")
         terminals = form.cleaned_data.get("terminals")
         terminals_type = form.cleaned_data.get("terminals_type")
         scenario = form.cleaned_data.get("scenario")
+        bts_qty = form.cleaned_data.get("bts_qty")
+        bts_type1_qty = form.cleaned_data.get("bts_type1_qty")
     
     
     context= {'form': form,
@@ -208,11 +214,13 @@ def calculate(request):
               'add_RGW': add_RGW,
               'eSFP_10G': eSFP_10G,
               'L2_service': L2_service,
-              'bts': bts,
-              'bts_type': bts_type,
+              'bts_all': bts_all,
+              'bts_type_1': bts_type_1,
               'terminals': terminals,
               'terminals_type': terminals_type,
               'scenario': scenario,
+              'bts_qty': bts_qty,
+              'bts_type1_qty': bts_type1_qty,
               }
     
     myData = [{"Position":"packet","Values" : packet},
@@ -227,11 +235,13 @@ def calculate(request):
           {"Position":"add_RGW", "Values" : add_RGW},
           {"Position":"eSFP_10G", "Values" : eSFP_10G},
           {"Position":"L2_service", "Values" : L2_service},
-          {"Position":"bts", "Values" : bts},
-          {"Position":"bts_type", "Values" : bts_type},
+          {"Position":"bts_all", "Values" : bts_all},
+          {"Position":"bts_type_1", "Values" : bts_type_1},
           {"Position":"terminals", "Values" : terminals},
           {"Position":"terminals_type", "Values" : terminals_type},
-          {"Position":"scenario", "Values" : scenario}]
+          {"Position":"scenario", "Values" : scenario},
+          {"Position":"bts_qty", "Values" : bts_qty},
+          {"Position":"bts_type1_qty", "Values" : bts_type1_qty}]
 
 
     with open('Trialink\\test_export.csv', 'w') as csvfile:

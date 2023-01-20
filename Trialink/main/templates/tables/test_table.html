@@ -1,8 +1,29 @@
 {% extends "base_table.html" %}
 {% block title %}Test Tables{% endblock title %}
 {% block header %}Test Tables{% endblock header %}
-
+<header>
+  <div class="collapse navbar-collapse" id="navbarToggle">
+    <div class="navbar-nav mr-auto">
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" 
+        aria-expanded="false">Dropdown <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'bts' %}">BTS</a></li>
+          <li><a href="{% url 'terminals' %}">Terminals</a></li>
+          <li><a href="{% url 'servers' %}">Servers</a></li>
+          <li><a href="{% url 'services' %}">Services</a></li>
+          <li><a href="{% url 'test' %}">test</a></li>
+          <li><a href="{% url 'test2' %}">TEST2</a></li>
+          <li role="separator" class="divider"></li>
+          <li class="dropdown-header">Self-constructor</li>
+          <li><a href="{% url 'cs' %}">Commercial solution</a></li>
+        </ul>
+      </li>
+    </div>
+  </div>
+</header>
 {% block content %}
+
 <div class="container">
 </div>
   <h3><br/>Ronet Test Table</h3>

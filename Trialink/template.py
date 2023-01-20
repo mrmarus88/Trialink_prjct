@@ -457,8 +457,8 @@ def calc():
             totalprice_poc = 0
     elif server_POC == "RONET Professional":
         server_POC_final = "RONET Profeccional pack:"
-        price_poc = "-"
-        count_poc = "-"
+        price_poc = ""
+        count_poc = ""
         totalprice_poc = 0
     
     #RONET PROFESSIONAL - HW+SW + additional licences:
@@ -495,7 +495,7 @@ def calc():
     telrad_count = add_enodeb-add_nontelrad
     add_telrad_nms_count = ()
     if telrad_count <= 15:
-        add_telrad_nms_count = 0
+        add_telrad_nms_count = "-"
         price_telrad_nms = "-"
         total_price_add_telrad_nms = 0
     else:
@@ -518,6 +518,8 @@ def calc():
         else:
             mars_nms_lic_5 = 1
             mars_nms_lic_1 =  add_nontelrad - 5
+            if mars_nms_lic_1 < 0:
+                mars_nms_lic_1 = 0
             price_mars_nms_lic_5 = additional['Price'][11]
             price_mars_nms_lic_1 = additional['Price'][12]
             totalprice_mars_nms_lic_5 = price_mars_nms_lic_5
@@ -707,6 +709,7 @@ def calc():
     total_terminals_df = pd.DataFrame([
         {'Position': '', 'Quantity': '', 'Price': 'Totally for Terminals:', 'Total price': terminals_df['Total price'].sum()}])
     
+    
     #Make tables with titels
     KP_total = pd.concat([title_1,vers,
                           title_2,addi,
@@ -731,9 +734,13 @@ def calc():
         {'Position': '', 'Quantity': '', 'Price': '', 'Total price': ''},
         {'Position': '', 'Quantity': '', 'Price': 'Project total price: ', 'Total price': KP_calc['Total price'].sum()}]) 
 
-    #Make table Total + Main
+    #Make table Total + Main and format:
+    
+    
     KP_calc_final = pd.concat([KP_total,total],sort= False, axis=0)
     KP_calc_final.loc[KP_calc_final['Total price'] == 0, 'Total price'] = ""
+    KP_calc_final = KP_calc_final[KP_calc_final['Quantity'] != "-"]
+  
 
     writer = pd.ExcelWriter('media/results.xlsx')   # create excel writer object
     KP_calc_final.to_excel(writer)                  # write dataframe to excel 

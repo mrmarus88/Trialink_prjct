@@ -25,6 +25,28 @@ ul {
   margin:0px;
   /* Убираю еще отступы! */
   padding:0px;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}
+
+ul.dropdown-menu {
+  list-style: none;
+  /* Делаю элементы блочными. */
+  display: block;
+  /* Убираю отступы. */
+  margin:0px;
+  /* Убираю еще отступы! */
+  padding:0px;
+  padding:0px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 10px;
+  padding-inline-start: 10px;
 }
 
 .bg-blue {
@@ -100,8 +122,9 @@ a.article-title:hover {
 
 footer {
  position: sticky!important;
+ width:100%;
  top: 100%;
- padding-top:25px;
+ padding-top:60px;
  padding-bottom:25px;
  border-top:1px solid #ddd;
 }
@@ -160,6 +183,9 @@ footer a:hover {
   margin: 0 auto;
 }
 
+.colco {
+  width: 400px;
+}
 .container_contacts {
   display: flex;
   gap: 10px;
@@ -171,6 +197,9 @@ footer a:hover {
   padding-bottom: 5px;
 }
 
+.strong {
+  visibility: hidden;
+}
 .container_cont {
   width: 100%;
   max-width: 1024px; /*максимальная ширина может иметь другое значение*/
@@ -184,6 +213,9 @@ footer a:hover {
 
 .container_cs {
   display: flex;
+  width: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
   justify-content: space-between;
   padding-top: 5px;
   padding-bottom: 5px;

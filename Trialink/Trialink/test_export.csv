@@ -1,9 +1,9 @@
 Position,Values
-packet,2
-subscribers,1245
-server,RONET Professional
-enodeb_all,12
-non_telrad_enodeb,2
+packet,1
+subscribers,255
+server,RONET 300
+enodeb_all,15
+non_telrad_enodeb,5
 add_42U,
 add_7ubox,
 Router,
@@ -11,8 +11,10 @@ add_SGW,
 add_RGW,
 eSFP_10G,
 L2_service,
-bts,12
-bts_type,eB03H08112
+bts_all,15
+bts_type_1,eB01H03112
 terminals,
 terminals_type,-
-scenario,2
+scenario,1
+bts_qty,1
+bts_type1_qty,15

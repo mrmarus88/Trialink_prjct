@@ -70,8 +70,10 @@ class InputForm(forms.Form):
 		add_RGW= forms.IntegerField(required=False,validators=[MinValueValidator(0), MaxValueValidator(10)])
 		eSFP_10G= forms.IntegerField(required=False,validators=[MinValueValidator(0), MaxValueValidator(100)])
 		L2_service= forms.IntegerField(required=False,validators=[MinValueValidator(0), MaxValueValidator(100)])
-		bts= forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
-		bts_type= forms.ChoiceField(widget=forms.Select, choices=CHOICES3)
+		bts_all= forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
+		bts_qty= forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000)])
+		bts_type_1= forms.ChoiceField(widget=forms.Select, choices=CHOICES3)
+		bts_type1_qty= forms.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(1000)]) 
 		terminals= forms.IntegerField(required=False,validators=[MinValueValidator(0), MaxValueValidator(1000)])
 		terminals_type= forms.ChoiceField(widget=forms.Select, choices=CHOICES4)
 

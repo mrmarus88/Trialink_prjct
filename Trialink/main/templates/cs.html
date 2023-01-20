@@ -9,9 +9,54 @@
                     <form action="" method="POST">
                             {% csrf_token %}
                             <input class="btn btn-outline-info" type="Submit" name="submit" value="Calculate"/>
-                            {{ form.as_ul }}
-                            <div>
-
+                            <div class="container">
+                                <a> Основные параметры блока:</a> <br />
+                                <label> Scenario is:
+                                {{ form.scenario }}</label>
+                                <label> Packet:
+                                {{ form.packet }}</label>
+                                <label> Subscribers:
+                                {{ form.subscribers }}<br /></label>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="container">
+                                <a> Обязательные вводимые данные:</a> <br />
+                                <label> Server PoC:</label>
+                                {{ form.server_poc }}<br />
+                                <label> EnodeB count:</label>
+                                {{ form.enodeb_all }}<br />
+                                <label> Non-Telrad EnodeB count:</label>
+                                {{ form.non_telrad_enodeb }}<br />
+                                <label> BTS count:</label>
+                                {{ form.bts_all }}<br />
+                                <label> BTS types count:</label>
+                                {{ form.bts_qty }}<br />
+                                <label> BTS Types 1 are:</label>
+                                {{ form.bts_type_1 }}
+                                <label> BTS Type 1 qty:</label>
+                                {{ form.bts_type1_qty }}
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="container">
+                                <a> Дополнительно:</a> <br />
+                                <label> Terminals Count: </label> 
+                                {{ form.terminals }} <br />
+                                <label> Terminals Type are:</label>
+                                {{ form.terminals_type }}<br />
+                                <label> 42U box</label>
+                                {{ form.add_42U }}<br />
+                                <label> Router</label>
+                                {{ form.Router }}<br />
+                                <label> 7U box</label>
+                                {{ form.add_7ubox }}<br />
+                                <label> RGW</label>
+                                {{ form.add_RGW }}<br />
+                                <label> SGW</label>
+                                {{ form.add_SGW }}<br />
+                                <label> eSFP 10G+</label>
+                                {{ form.eSFP_10G }}<br />
+                                <label> L2 Service</label>
+                                {{ form.L2_service }}<br />
                             </div>
                     </form> 
                 </div>         
@@ -21,24 +66,37 @@
                             {% csrf_token %}
                             <button class="btn btn-outline-info" type="submit">Show Solution</button>
                         </form>
-                        <h3>Your solution consist :</h3>
-                        <ul><font size="3">Scenario: <b>{{ scenario }}</b></font></ul>
-                        <ul><font size="3">Packet: #<b>{{ packet }}</b></font></ul>
-                        <ul><font size="3">Subscribers quantity: <b>{{ subscribers }}</b></font></ul>
-                        <ul><font size="3">Server PoC is: <b>{{ server_poc }}</b></font></ul>
-                        <ul><font size="3">eNodeB all is: <b>{{ enodeb_all }}</b></font></ul>
-                        <ul><font size="3">Non Telrad eNodeB is: <b>{{ non_telrad_enodeb }}</b></font></ul>
-                        <ul><font size="3">42U is: <b>{{ add_42U }}</b></font></ul>
-                        <ul><font size="3">7U box is: <b>{{ add_7ubox }}</b></font></ul>
-                        <ul><font size="3">Router is: <b>{{ Router }}</b></font></ul>
-                        <ul><font size="3">SGW is: <b>{{ add_SGW }}</b></font></ul>
-                        <ul><font size="3">RGW is: <b>{{ add_RGW }}</b></font></ul>
-                        <ul><font size="3">eSFP 10G+ is: <b>{{ eSFP_10G }}</b></font></ul>
-                        <ul><font size="3">L2 servoce is: <b>{{ L2_service }}</b></font></ul>
-                        <ul><font size="3">BTS is: <b>{{ bts }}</b></font></ul>
-                        <ul><font size="3">BTS types is: <b>{{ bts_type }}</b></font></ul>
-                        <ul><font size="3">Terminals count is: <b>{{ terminals }}</b></font></ul>
-                        <ul><font size="3">Terminals type is: <b>{{ terminals_type }}</b></font></ul>
+                        <div class="container">
+                            <a> Основные параметры блока:</a> <br />
+                                <a>Scenario: <font size="4"> <b>{{ scenario }}</b></font></a><br />
+                                <a>Packet: # <font size="4"><b>{{ packet }}</b></font></a><br />
+                                <a>Subscribers quantity: <font size="4"><b>{{ subscribers }}</b></font></a><br />
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="container">
+                            <a> Обязательные вводимые данные:</a> <br />
+                                <a>Server PoC is: <font size="3"><b>{{ server_poc }}</b></font></a><br />
+                                <a>eNodeB all is: <font size="3"><b>{{ enodeb_all }}</b></font></a><br />
+                                <a>Non Telrad eNodeB is: <font size="3"><b>{{ non_telrad_enodeb }}</b></font></a><br />
+                                <a>BTS is: <font size="3"><b>{{ bts_all }}</b></font></a><br />
+                                <a>BTS types qty are: <font size="3"><b>{{ bts_qty }}</b></font></a><br />
+                                <a>BTS types 1 are: <font size="3"><b>{{ bts_type_1 }}</b></font></a><br />
+                                <a>BTS types 1 qty are: <font size="3"><b>{{ bts_type1_qty }}</b></font></a><br />
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="container">
+                            <a> Дополнительно:</a> <br />
+                                <a>42U is: <font size="3"><b>{{ add_42U }}</b></font></a><br />
+                                <a>7U box is: <font size="3"><b>{{ add_7ubox }}</b></font></a><br />
+                                <a>Router is: <font size="3"><b>{{ Router }}</b></font></a><br />
+                                <a>SGW is: <font size="3"><b>{{ add_SGW }}</b></font></a><br />
+                                <a>RGW is: <font size="3"><b>{{ add_RGW }}</b></font></a><br />
+                                <a>eSFP 10G+ is: <font size="3"><b>{{ eSFP_10G }}</b></font></a><br />
+                                <a>L2 servoce is: <font size="3"><b>{{ L2_service }}</b></font></a><br />
+                                <a>Terminals count is: <font size="3"><b>{{ terminals }}</b></font></a><br />
+                                <a>Terminals type is: <font size="3"><b>{{ terminals_type }}</b></font></a><br />
+                        </div>
+                        <div class="dropdown-divider"></div>
                     </div>
                     {% endif %}
         </section>
