@@ -8,6 +8,7 @@ import math
 def calc():
     #import csv template
     export_values = pd.DataFrame(pd.read_csv('Trialink\\test_export.csv')).fillna(0)
+    #export_values_discription = pd.DataFrame(pd.read_csv('Trialink\\dicriptions.xlsx',sep='\t',encoding='cp1251')).fillna(0)
 
     version_1_base = pd.DataFrame({'Position':['EPC 1',
                                     'EPC 2',
@@ -490,6 +491,9 @@ def calc():
     Server_POC_final = pd.DataFrame([{'Position': server_POC_final, 'Quantity': count_poc, 'Price': price_poc, 'Total price': totalprice_poc}])    
     
     Ronet_server = pd.concat([Server_POC_final,Ronet_Profi_final],sort= False, axis=0)
+    
+    global server_poc_tmp
+    server_poc_tmp = server_POC_final
 
     #NMS Telrad additional licences:
     telrad_count = add_enodeb-add_nontelrad
@@ -740,11 +744,11 @@ def calc():
     KP_calc_final = pd.concat([KP_total,total],sort= False, axis=0)
     KP_calc_final.loc[KP_calc_final['Total price'] == 0, 'Total price'] = ""
     KP_calc_final = KP_calc_final[KP_calc_final['Quantity'] != "-"]
-  
-
+    
     writer = pd.ExcelWriter('media/results.xlsx')   # create excel writer object
     KP_calc_final.to_excel(writer)                  # write dataframe to excel 
-    writer.save()                                   # save the excel 
+    writer.save()       
+
     
     #transform DataFrame in Table 
     html_KP_calc = pretty_html_table.build_table(KP_calc_final
@@ -754,10 +758,14 @@ def calc():
                                                     , width='auto'
                                                     , index=False)
 
+      
+    
     #write html to file 
     text_file = open("main/templates/show_result_calc.html", "w") 
-    text_file.write(html_KP_calc)  
+    text_file.write(html_KP_calc)
     text_file.close()
+
+
     
     
 

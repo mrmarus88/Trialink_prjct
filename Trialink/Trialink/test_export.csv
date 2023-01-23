@@ -12,7 +12,7 @@ add_RGW,
 eSFP_10G,
 L2_service,
 bts_all,15
-bts_type_1,eB01H03112
+bts_type_1,eB03H09122
 terminals,
 terminals_type,-
 scenario,1

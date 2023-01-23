@@ -1,10 +1,14 @@
 from openpyxl import Workbook
 import pandas as pd 
 import numpy as np
-import pretty_html_table
-import math
+import template as tmp
 
 
 def disc():
-    #import xlsx template
-    export_values = pd.DataFrame(pd.read_csv('Trialink\\dicriptions.xlsx',sep='\t',encoding='cp1251')).fillna(0)
+    
+    #Make table Total + Main and format:
+    
+    
+    writer = pd.ExcelWriter('media/results.xlsx')   # create excel writer object
+    KP_calc_final.to_excel(writer)                  # write dataframe to excel 
+    writer.save()                                   # save the excel 
