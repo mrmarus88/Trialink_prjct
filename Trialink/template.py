@@ -487,7 +487,7 @@ def calc():
         Ronet_Profi_final = pd.DataFrame([
             {'Position': '-', 'Quantity': '-', 'Price': '-', 'Total price': 0}]) 
     
-     #Make final Dataframe based on Server POC:
+    #Make final Dataframe based on Server POC:
     Server_POC_final = pd.DataFrame([{'Position': server_POC_final, 'Quantity': count_poc, 'Price': price_poc, 'Total price': totalprice_poc}])    
     
     Ronet_server = pd.concat([Server_POC_final,Ronet_Profi_final],sort= False, axis=0)
